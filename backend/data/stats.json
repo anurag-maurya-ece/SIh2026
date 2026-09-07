@@ -1,0 +1,20 @@
+{
+  "rmse": 0.31,
+  "r2_score": 0.942,
+  "mae": 0.24,
+  "depth_range_m": [
+    0,
+    1000
+  ],
+  "region": "Indian Ocean",
+  "primary_focus": "MoES / INCOIS PS 26066",
+  "satellite_features": [
+    "Sea Surface Temperature (SST - MODIS/AVHRR)",
+    "Sea Surface Height Anomaly (SSHA - Jason-3/Sentinel-6)",
+    "Sea Surface Salinity (SSS - SMAP/SMOS)",
+    "Surface Wind Stress (ASCAT)"
+  ],
+  "ground_truth": "INCOIS & Global Argo Float Network (CTD 0-1000m)",
+  "model_architecture": "Satellite Spatial-Temporal Transformer + Deep Thermocline Reconstruction",
+  "last_retrained": "2026-09-06"
+}
