@@ -14,17 +14,19 @@ with gr.Blocks(title="OceanEmbed — Real-Time Subsurface AI") as demo:
     
     This Space hosts the **FastAPI REST API** and **AI Model Inference Engine** powering the 3D Ocean Visualizer.
     
-    #### Active Endpoints:
-    - `GET /api/stats` — Model validation metrics (RMSE 0.31°C, R² 0.942)
-    - `GET /api/predict_grid?depth={0-1000}` — Spatial Indian Ocean thermal grid
-    - `GET /api/predict_profile?lat={lat}&lon={lon}` — 0-1000m continuous thermocline profile
-    - `GET /api/argo_floats` — Active INCOIS & Global Argo observation telemetry
-    - `GET /docs` — Interactive OpenAPI / Swagger documentation
+    #### Active REST Endpoints:
+    - **[GET /api/stats](/api/stats)** — Model validation metrics (RMSE 0.31°C, R² 0.942)
+    - **[GET /api/predict_grid?depth=0](/api/predict_grid?depth=0)** — Spatial Indian Ocean thermal grid
+    - **[GET /api/predict_profile?lat=24.42&lon=44.05](/api/predict_profile?lat=24.42&lon=44.05)** — 0-1000m continuous thermocline profile
+    - **[GET /api/argo_floats](/api/argo_floats)** — Active INCOIS & Global Argo observation telemetry
+    - **[GET /docs](/docs)** — Interactive OpenAPI / Swagger documentation
     """)
 
-# Mount FastAPI app into Gradio on root
-app = gr.mount_gradio_app(fastapi_app, demo, path="/")
+# Mount Gradio app onto FastAPI
+app = gr.mount_gradio_app(fastapi_app, demo, path="/gradio")
 
+# Launch for Hugging Face Spaces
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+    demo.launch(server_name="0.0.0.0", server_port=7860)
+else:
+    demo.launch()
