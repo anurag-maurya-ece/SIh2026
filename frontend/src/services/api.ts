@@ -1,6 +1,10 @@
 import { GridPoint, ProfilePoint, ArgoFloat, ModelStats } from '../utils/geo';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dearece-oceanembed-backend.hf.space');
+
+
 
 // In-memory cache for ultra-responsive depth slider interaction
 const gridDepthCache = new Map<number, GridPoint[]>();
