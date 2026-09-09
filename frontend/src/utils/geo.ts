@@ -247,8 +247,7 @@ export function createHeatmapCanvasTexture(
   if (!grid || grid.length === 0) return canvas;
 
   const latStep = 3.0;
-  const radiusX = (width / 360) * latStep * 1.6;
-  const radiusY = (height / 180) * latStep * 1.6;
+  const blendRadius = (width / 360) * latStep * 2.2;
 
   for (const point of grid) {
     // FILTER: Only draw heatmap inside the Indian Ocean region
@@ -261,24 +260,25 @@ export function createHeatmapCanvasTexture(
 
     const color = getTemperatureColor(point.temp);
     
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, Math.max(radiusX, radiusY));
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, blendRadius);
     gradient.addColorStop(0, `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`);
-    gradient.addColorStop(0.55, `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity * 0.75})`);
+    gradient.addColorStop(0.35, `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity * 0.82})`);
+    gradient.addColorStop(0.7, `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity * 0.4})`);
     gradient.addColorStop(1, `rgba(${color.r}, ${color.g}, ${color.b}, 0)`);
 
     ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(x, y, Math.max(radiusX, radiusY), 0, Math.PI * 2);
+    ctx.arc(x, y, blendRadius, 0, Math.PI * 2);
     ctx.fill();
 
     // Wrap around seam at lon +-180 if needed
-    if (x < radiusX) {
+    if (x < blendRadius) {
       ctx.beginPath();
-      ctx.arc(x + width, y, Math.max(radiusX, radiusY), 0, Math.PI * 2);
+      ctx.arc(x + width, y, blendRadius, 0, Math.PI * 2);
       ctx.fill();
-    } else if (x > width - radiusX) {
+    } else if (x > width - blendRadius) {
       ctx.beginPath();
-      ctx.arc(x - width, y, Math.max(radiusX, radiusY), 0, Math.PI * 2);
+      ctx.arc(x - width, y, blendRadius, 0, Math.PI * 2);
       ctx.fill();
     }
   }

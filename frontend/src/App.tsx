@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
+import { Layers, SlidersHorizontal, Activity, Globe, X } from 'lucide-react';
 
 import { Earth } from './components/Earth';
 import { CloudLayer } from './components/CloudLayer';
@@ -23,6 +24,9 @@ import { CompassWidget } from './components/CompassWidget';
 import { FullProfileModal } from './components/FullProfileModal';
 import { OceanBlockView } from './components/OceanBlock';
 import { FloatTelemetryCard } from './components/FloatTelemetryCard';
+import { ConstellationModal } from './components/ConstellationModal';
+import { TelemetryAnalyticsModal } from './components/TelemetryAnalyticsModal';
+import { MissionInfoModal } from './components/MissionInfoModal';
 
 import {
   fetchStats,
@@ -114,6 +118,7 @@ export function App() {
   const [autoUpdate, setAutoUpdate] = useState<boolean>(true);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState<boolean>(false);
   const [isOceanBlockOpen, setIsOceanBlockOpen] = useState<boolean>(false);
+  const [mobilePanel, setMobilePanel] = useState<'none' | 'left' | 'right'>('none');
 
   // Hovered / Selected Float for side panel display
   const [hoveredFloat, setHoveredFloat] = useState<ArgoFloat | null>(null);
@@ -290,42 +295,150 @@ export function App() {
       />
 
       {/* 2. MAIN CENTER HUD (Left Sidebar & Right Sidebar) */}
-      <div className="relative z-10 w-full flex-1 flex justify-between px-6 py-4 pointer-events-none items-start">
-        {/* Left Column (Left Sidebar & Side Float Telemetry Card) */}
-        <div className="flex flex-col gap-3">
-          <LeftSidebar
-            region={selectedPoint.region}
-            subRegion="MoES PS 26066"
-            surfaceTemp={selectedPoint.surface_temp}
-            depthRange={stats ? stats.depth_range_m : [0, 1000]}
-            coordinatesStr={coordinatesStr}
-            stats={stats}
-            onOpenDetails={() => setIsDetailsModalOpen(true)}
-            onOpenOceanBlock={() => setIsOceanBlockOpen(true)}
-          />
-
-          {/* Dedicated Side Float Observation Card */}
-          {(hoveredFloat || selectedFloat) && (
-            <FloatTelemetryCard
-              float={hoveredFloat || selectedFloat!}
-              onClose={() => {
-                setHoveredFloat(null);
-                setSelectedFloat(null);
+      <div className="relative z-10 w-full flex-1 flex justify-between px-3 md:px-6 py-2 md:py-4 pointer-events-none items-start overflow-hidden">
+        {/* Left Column - Desktop Static / Mobile Overlay */}
+        <div
+          className={`${
+            mobilePanel === 'left'
+              ? 'fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm p-4 flex flex-col justify-center items-center pointer-events-auto animate-in fade-in duration-150'
+              : 'hidden lg:flex pointer-events-none'
+          }`}
+          onClick={(e) => {
+            if (e.target === e.currentTarget && mobilePanel === 'left') {
+              setMobilePanel('none');
+            }
+          }}
+        >
+          <div className="flex flex-col gap-2.5 max-h-[85vh] overflow-y-auto pointer-events-auto">
+            {mobilePanel === 'left' && (
+              <div className="flex items-center justify-between pb-1 lg:hidden">
+                <span className="text-xs font-mono font-semibold text-white bg-slate-900 px-3 py-1 rounded-lg border border-slate-700 shadow-xs">
+                  Observation Telemetry
+                </span>
+                <button
+                  onClick={() => setMobilePanel('none')}
+                  className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 shadow-xs"
+                >
+                  <X className="w-4 h-4 stroke-[2]" />
+                </button>
+              </div>
+            )}
+            <LeftSidebar
+              region={selectedPoint.region}
+              subRegion="MoES PS 26066"
+              surfaceTemp={selectedPoint.surface_temp}
+              depthRange={stats ? stats.depth_range_m : [0, 1000]}
+              coordinatesStr={coordinatesStr}
+              stats={stats}
+              onOpenDetails={() => {
+                setIsDetailsModalOpen(true);
+                setMobilePanel('none');
               }}
-              onSelect={handleLoadFloatProfile}
+              onOpenOceanBlock={() => {
+                setIsOceanBlockOpen(true);
+                setMobilePanel('none');
+              }}
+              onOpenSatellites={() => {
+                setActiveNav('satellites');
+                setMobilePanel('none');
+              }}
+              onOpenTelemetry={() => {
+                setActiveNav('analytics');
+                setMobilePanel('none');
+              }}
             />
-          )}
+
+            {/* Dedicated Side Float Observation Card */}
+            {(hoveredFloat || selectedFloat) && (
+              <FloatTelemetryCard
+                float={hoveredFloat || selectedFloat!}
+                onClose={() => {
+                  setHoveredFloat(null);
+                  setSelectedFloat(null);
+                }}
+                onSelect={(f) => {
+                  handleLoadFloatProfile(f);
+                  setMobilePanel('none');
+                }}
+              />
+            )}
+          </div>
         </div>
 
-        {/* Right Sidebar */}
-        <RightSidebar
-          depth={depth}
-          onDepthChange={setDepth}
-          activeLayer={activeLayer}
-          onLayerChange={setActiveLayer}
-          autoUpdate={autoUpdate}
-          onToggleAutoUpdate={() => setAutoUpdate(!autoUpdate)}
-        />
+        {/* Right Sidebar - Desktop Static / Mobile Overlay */}
+        <div
+          className={`${
+            mobilePanel === 'right'
+              ? 'fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm p-4 flex flex-col justify-center items-center pointer-events-auto animate-in fade-in duration-150'
+              : 'hidden lg:block pointer-events-none'
+          }`}
+          onClick={(e) => {
+            if (e.target === e.currentTarget && mobilePanel === 'right') {
+              setMobilePanel('none');
+            }
+          }}
+        >
+          <div className="max-h-[85vh] overflow-y-auto pointer-events-auto flex flex-col gap-2">
+            {mobilePanel === 'right' && (
+              <div className="flex items-center justify-between pb-1 lg:hidden">
+                <span className="text-xs font-mono font-semibold text-white bg-slate-900 px-3 py-1 rounded-lg border border-slate-700 shadow-xs">
+                  Layers & Depth Controls
+                </span>
+                <button
+                  onClick={() => setMobilePanel('none')}
+                  className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 shadow-xs"
+                >
+                  <X className="w-4 h-4 stroke-[2]" />
+                </button>
+              </div>
+            )}
+            <RightSidebar
+              depth={depth}
+              onDepthChange={setDepth}
+              activeLayer={activeLayer}
+              onLayerChange={setActiveLayer}
+              autoUpdate={autoUpdate}
+              onToggleAutoUpdate={() => setAutoUpdate(!autoUpdate)}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 2.5 MOBILE QUICK DOCK (Visible on < lg screens) */}
+      <div className="lg:hidden fixed bottom-11 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2 py-1.5 rounded-xl border border-slate-200/90 shadow-lg">
+        <button
+          onClick={() => setMobilePanel(mobilePanel === 'left' ? 'none' : 'left')}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            mobilePanel === 'left'
+              ? 'bg-slate-900 text-white shadow-xs'
+              : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'
+          }`}
+        >
+          <Activity className="w-3.5 h-3.5 text-sky-600 stroke-[2.2]" />
+          <span>Telemetry</span>
+        </button>
+
+        <button
+          onClick={() => setMobilePanel(mobilePanel === 'right' ? 'none' : 'right')}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            mobilePanel === 'right'
+              ? 'bg-slate-900 text-white shadow-xs'
+              : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'
+          }`}
+        >
+          <SlidersHorizontal className="w-3.5 h-3.5 text-sky-600 stroke-[2.2]" />
+          <span>Depth & Layers</span>
+        </button>
+
+        {mobilePanel !== 'none' && (
+          <button
+            onClick={() => setMobilePanel('none')}
+            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors"
+            title="Return to Globe"
+          >
+            <Globe className="w-3.5 h-3.5 stroke-[2.2]" />
+          </button>
+        )}
       </div>
 
       {/* 3. FLOATING COMPASS WIDGET (Bottom-Right corner over the globe) */}
@@ -354,7 +467,25 @@ export function App() {
         </div>
       )}
 
-      {/* 6. FULL PROFILE MODAL (When clicking View Full Profile) */}
+      {/* 6. SATELLITE CONSTELLATION TELEMETRY MODAL */}
+      {activeNav === 'satellites' && (
+        <ConstellationModal onClose={() => setActiveNav('explore')} />
+      )}
+
+      {/* 7. MODEL TELEMETRY & ACCURACY VALIDATION MODAL */}
+      {activeNav === 'analytics' && (
+        <TelemetryAnalyticsModal
+          stats={stats}
+          onClose={() => setActiveNav('explore')}
+        />
+      )}
+
+      {/* 8. MISSION & SIH 26066 ARCHITECTURE MODAL */}
+      {activeNav === 'about' && (
+        <MissionInfoModal onClose={() => setActiveNav('explore')} />
+      )}
+
+      {/* 9. FULL PROFILE MODAL (When clicking View Full Profile) */}
       {isDetailsModalOpen && (
         <FullProfileModal
           id={selectedPoint.id}

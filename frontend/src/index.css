@@ -10,14 +10,20 @@
     margin: 0;
     padding: 0;
     background-color: #020612;
-    color: #f1f5f9;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #0f172a;
+    font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     user-select: none;
     overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
+  .font-display {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  }
+
   .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
   }
 
   .font-serif-italic {
@@ -26,26 +32,78 @@
   }
 }
 
-/* Premium Dark Frosted Glassmorphism matching the exact reference UI */
+/* Modern Institutional Ocean Intelligence UI System */
 .glass-hud {
-  background: rgba(8, 16, 32, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  color: #0f172a;
 }
 
-.glass-hud-subtle {
-  background: rgba(10, 20, 40, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+.institutional-card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.08), 0 1px 3px 0 rgba(15, 23, 42, 0.04);
+  color: #0f172a;
 }
 
-.glass-hud-active {
-  background: rgba(14, 40, 80, 0.65);
-  border: 1px solid rgba(0, 168, 255, 0.4);
-  box-shadow: 0 0 20px rgba(0, 168, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+.ocean-btn-primary {
+  background: #0284c7;
+  color: #ffffff;
+  border: 1px solid #0369a1;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+.ocean-btn-primary:hover {
+  background: #0369a1;
+  box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.35);
+  transform: translateY(-0.5px);
+}
+.ocean-btn-primary:active {
+  transform: translateY(0.5px);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.ocean-btn-dark {
+  background: #0f172a;
+  color: #ffffff;
+  border: 1px solid #1e293b;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+.ocean-btn-dark:hover {
+  background: #1e293b;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.25);
+  transform: translateY(-0.5px);
+}
+.ocean-btn-dark:active {
+  transform: translateY(0.5px);
+}
+
+.data-badge-sky {
+  background: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  font-weight: 600;
+}
+
+.data-badge-emerald {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  font-weight: 600;
+}
+
+.data-badge-slate {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
 }
 
 /* Custom Scrollbars */
@@ -65,9 +123,9 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 242, 254, 0.2);
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 210, 255, 0.4);
+  background: rgba(0, 242, 254, 0.5);
 }

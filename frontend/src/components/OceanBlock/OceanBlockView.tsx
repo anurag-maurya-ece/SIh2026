@@ -150,255 +150,239 @@ export const OceanBlockView: React.FC<OceanBlockViewProps> = ({
       </div>
 
       {/* ─── 2. TOP HEADER HUD ─── */}
-      <div className="relative z-10 w-full px-6 py-4 flex items-center justify-between pointer-events-none">
+      <div className="relative z-10 w-full px-3 sm:px-5 py-2.5 flex items-center justify-between pointer-events-none gap-2">
         {/* Left Title Badge */}
-        <div className="flex items-center gap-3 pointer-events-auto">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 p-[1px] shadow-lg shadow-cyan-500/20 flex items-center justify-center">
-            <div className="w-full h-full bg-[#070e1c] rounded-[11px] flex items-center justify-center">
-              <Layers className="w-5 h-5 text-cyan-400" />
-            </div>
+        <div className="flex items-center gap-2 pointer-events-auto bg-white/95 backdrop-blur-md px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl border border-slate-200/90 shadow-sm">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-900 text-sky-400 flex items-center justify-center shadow-xs shrink-0">
+            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.2]" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-bold text-white tracking-tight">
+            <div className="flex items-center gap-1.5">
+              <h2 className="text-xs sm:text-sm font-display font-bold text-slate-900 tracking-tight whitespace-nowrap">
                 3D Ocean Block Slice
               </h2>
-              <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
-                0 – 1000m Subsurface
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-sky-50 text-sky-700 border border-sky-200">
+                0–1000m
               </span>
             </div>
-            <div className="text-xs text-slate-400 font-mono mt-0.5 flex items-center gap-1.5">
-              <span>{region}</span>
-              <span className="text-slate-600">•</span>
-              <span className="text-cyan-300 font-bold">
-                {Math.abs(lat).toFixed(2)}°{lat >= 0 ? 'N' : 'S'}, {Math.abs(lon).toFixed(2)}°{lon >= 0 ? 'E' : 'W'}
+            <div className="text-[10px] text-slate-500 font-mono font-medium flex items-center gap-1">
+              <span className="truncate max-w-[90px] sm:max-w-none">{region}</span>
+              <span className="text-slate-300">•</span>
+              <span className="text-slate-700 font-semibold">
+                {Math.abs(lat).toFixed(1)}°{lat >= 0 ? 'N' : 'S'}, {Math.abs(lon).toFixed(1)}°{lon >= 0 ? 'E' : 'W'}
               </span>
             </div>
           </div>
         </div>
 
         {/* Center View Angle Selector */}
-        <div className="flex items-center gap-1.5 glass-hud p-1 rounded-xl border border-white/10 pointer-events-auto backdrop-blur-md">
+        <div className="hidden sm:flex items-center gap-1 bg-white/95 backdrop-blur-md p-1 rounded-xl border border-slate-200/90 pointer-events-auto shadow-sm">
           <button
             onClick={() => setPresetView('iso')}
-            className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all ${
               cameraView === 'iso'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 font-semibold'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             Isometric
           </button>
           <button
             onClick={() => setPresetView('front')}
-            className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all ${
               cameraView === 'front'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 font-semibold'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
-            Front Slice
+            Front
           </button>
           <button
             onClick={() => setPresetView('side')}
-            className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all ${
               cameraView === 'side'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 font-semibold'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
-            Side Profile
+            Side
           </button>
           <button
             onClick={() => setPresetView('top')}
-            className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all ${
               cameraView === 'top'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 font-semibold'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
-            Surface View
+            Top
           </button>
-          <div className="w-[1px] h-4 bg-white/10 mx-1" />
+          <div className="w-[1px] h-3.5 bg-slate-200 mx-0.5" />
           <button
             onClick={() => setPresetView('iso')}
-            className="p-1 text-slate-400 hover:text-cyan-300 transition-colors"
+            className="p-1 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             title="Reset Orbit"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3 h-3 stroke-[2.2]" />
           </button>
         </div>
 
-        {/* Right Close Button if used in overlay/modal mode */}
+        {/* Right Close Button */}
         {onClose && (
           <button
             onClick={onClose}
-            className="p-2 rounded-xl glass-hud border border-white/10 text-slate-300 hover:text-white hover:border-red-400/40 hover:bg-red-500/10 transition-all pointer-events-auto shadow-lg"
+            className="p-1.5 sm:p-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all pointer-events-auto shadow-sm"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 stroke-[2.2]" />
           </button>
         )}
       </div>
 
-      {/* ─── 3. CENTER HUD (TELEMETRY CARD & THERMAL SCALE) ─── */}
-      <div className="relative z-10 w-full flex justify-between px-6 pointer-events-none items-start">
+      {/* ─── 3. CENTER HUD (COMPACT TELEMETRY CARD & THERMAL SCALE) ─── */}
+      <div className="relative z-10 w-full flex justify-between px-3 sm:px-5 pointer-events-none items-start gap-2">
         {/* Left Telemetry Card */}
-        <div className="glass-hud p-4 rounded-2xl border border-cyan-500/15 backdrop-blur-md shadow-2xl flex flex-col gap-3 w-72 pointer-events-auto animate-in fade-in slide-in-from-left-4 duration-200">
-          <div className="flex items-center justify-between pb-2 border-b border-white/5">
-            <span className="text-[11px] font-bold text-white uppercase tracking-wider font-mono">
-              Thermal Profile Telemetry
+        <div className="institutional-card p-2.5 sm:p-3 rounded-xl flex flex-col gap-2 w-60 sm:w-64 md:w-68 pointer-events-auto animate-in fade-in slide-in-from-left-4 duration-200 text-slate-900 shadow-md">
+          <div className="flex items-center justify-between pb-1 border-b border-slate-100">
+            <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-slate-500">
+              Subsurface Telemetry
             </span>
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           </div>
 
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-1.5">
             {/* Active Selected Depth Temp */}
-            <div className="p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 flex items-center justify-between">
+            <div className="p-2 sm:p-2.5 rounded-lg bg-gradient-to-br from-slate-900 via-slate-850 to-blue-950 border border-slate-800 shadow-xs flex items-center justify-between text-white">
               <div>
-                <div className="text-[9.5px] text-cyan-300 uppercase font-semibold">
-                  Active Slice ({Math.round(currentDepth)}m)
+                <div className="text-[9px] uppercase font-semibold text-sky-300">
+                  Slice Depth: {Math.round(currentDepth)}m
                 </div>
-                <div className="text-lg font-bold font-mono text-white mt-0.5">
+                <div className="text-base sm:text-lg font-bold font-mono mt-0.5 text-white">
                   {currentData.temp.toFixed(2)}°C
                 </div>
               </div>
               <div
-                className="w-4 h-4 rounded-full border border-white/40 shadow-sm"
+                className="w-4 h-4 rounded-full border border-white/40 shadow-xs shrink-0"
                 style={{ backgroundColor: getTemperatureColor(currentData.temp).hex }}
               />
             </div>
 
-            {/* Surface SST */}
-            <div className="flex items-center justify-between text-xs px-1">
-              <span className="text-slate-400">Sea Surface (0m):</span>
-              <span className="font-mono font-bold text-amber-300">{surfaceData.temp.toFixed(1)}°C</span>
+            {/* Compact Metric Rows */}
+            <div className="grid grid-cols-2 gap-1.5 text-[10.5px]">
+              <div className="bg-slate-50 px-2 py-1 rounded-md border border-slate-100 flex flex-col">
+                <span className="text-[9px] text-slate-400 font-medium">Surface (0m)</span>
+                <span className="font-mono font-bold text-slate-800">{surfaceData.temp.toFixed(1)}°C</span>
+              </div>
+              <div className="bg-slate-50 px-2 py-1 rounded-md border border-slate-100 flex flex-col">
+                <span className="text-[9px] text-slate-400 font-medium">Abyssal (1000m)</span>
+                <span className="font-mono font-bold text-slate-800">{deepData.temp.toFixed(1)}°C</span>
+              </div>
             </div>
 
-            {/* 1000m Abyssal */}
-            <div className="flex items-center justify-between text-xs px-1">
-              <span className="text-slate-400">Abyssal Floor (1000m):</span>
-              <span className="font-mono font-bold text-blue-400">{deepData.temp.toFixed(1)}°C</span>
+            <div className="flex items-center justify-between text-[10px] px-1 font-medium text-slate-600">
+              <span>ΔT Thermal Gradient:</span>
+              <span className="font-mono font-bold text-rose-600">-{deltaT}°C</span>
             </div>
 
-            {/* Thermal Gradient Drop */}
-            <div className="flex items-center justify-between text-xs px-1">
-              <span className="text-slate-400">ΔT Surface Drop:</span>
-              <span className="font-mono font-bold text-emerald-400">-{deltaT}°C</span>
-            </div>
-
-            {/* Confidence */}
-            <div className="flex items-center justify-between text-xs px-1">
-              <span className="text-slate-400">AI Confidence:</span>
-              <span className="font-mono font-bold text-cyan-400">
-                {(currentData.confidence * 100).toFixed(1)}%
+            <div className="flex items-center justify-between text-[10px] px-1 font-medium text-slate-600">
+              <span>AI Validation:</span>
+              <span className="font-mono font-bold text-emerald-700">
+                {(currentData.confidence * 100).toFixed(1)}% R²
               </span>
             </div>
           </div>
 
           {/* Thermal Layer Description Badge */}
-          <div className="p-2 rounded-xl bg-[#09152b] border border-white/5 text-[10px] text-slate-300 leading-relaxed">
+          <div className="p-2 rounded-lg bg-slate-50/90 border border-slate-200/70 text-[9.5px] leading-snug text-slate-600">
             {currentDepth < 80 ? (
-              <span className="text-amber-200">
-                ☀️ <strong>Epipelagic Mixed Layer:</strong> Sunlit surface zone with active atmospheric heat exchange.
+              <span>
+                ☀️ <strong className="text-slate-900 font-semibold">Epipelagic:</strong> Sunlit mixed layer with direct atmospheric coupling.
               </span>
             ) : currentDepth < 350 ? (
-              <span className="text-cyan-200">
-                ⚡ <strong>Main Thermocline:</strong> Rapid thermal gradient zone with highest temperature decline rate.
+              <span>
+                ⚡ <strong className="text-slate-900 font-semibold">Thermocline:</strong> Steep gradient zone of rapid cooling.
               </span>
             ) : (
-              <span className="text-blue-300">
-                ❄️ <strong>Mesopelagic / Bathypelagic:</strong> Cold, uniform deep ocean water layer stable near 4-6°C.
+              <span>
+                ❄️ <strong className="text-slate-900 font-semibold">Bathypelagic:</strong> Cold, uniform deep water layer (~4-6°C).
               </span>
             )}
           </div>
         </div>
 
         {/* Right Color Scale & Legend Card */}
-        <div className="glass-hud p-4 rounded-2xl border border-cyan-500/15 backdrop-blur-md shadow-2xl flex flex-col gap-3 w-56 pointer-events-auto animate-in fade-in slide-in-from-right-4 duration-200">
-          <div className="text-[11px] font-bold text-white uppercase tracking-wider font-mono pb-2 border-b border-white/5">
-            Thermal Scale (SST/Subsurface)
+        <div className="hidden sm:flex institutional-card p-2.5 sm:p-3 rounded-xl flex-col gap-2 w-44 md:w-48 pointer-events-auto animate-in fade-in slide-in-from-right-4 duration-200 text-slate-900 shadow-md">
+          <div className="text-[10px] font-bold uppercase tracking-wider font-mono pb-1 border-b border-slate-100 text-slate-500">
+            Thermal Spectrum
           </div>
 
           {/* Color Gradient Bar */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             <div
-              className="h-3 w-full rounded-md shadow-inner border border-white/10"
+              className="h-2 w-full rounded-md border border-slate-200/60 overflow-hidden shadow-xs"
               style={{
                 background:
-                  'linear-gradient(to right, #1a0033 0%, #0a2558 15%, #00a8cc 35%, #2ec4b6 55%, #ffb703 75%, #fb8500 88%, #d62828 100%)',
+                  'linear-gradient(to right, #1a0033 0%, #0a2558 15%, #00a8cc 35%, #2ec4b6 55%, #38bdf8 75%, #fb8500 88%, #d62828 100%)',
               }}
             />
-            <div className="flex justify-between text-[9px] font-mono text-slate-400">
+            <div className="flex justify-between text-[8.5px] font-mono font-medium text-slate-500">
               <span>-2°C</span>
-              <span>4°C</span>
-              <span>10°C</span>
-              <span>18°C</span>
-              <span>26°C</span>
+              <span>15°C</span>
               <span>&gt;32°C</span>
             </div>
           </div>
 
-          <div className="pt-2 border-t border-white/5 flex flex-col gap-1.5 text-[9.5px] text-slate-400">
+          <div className="pt-1.5 border-t border-slate-100 flex flex-col gap-1 text-[9.5px] font-medium text-slate-700">
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-sm bg-[#d62828]" />
-              <span>Warm Mixed Water (&gt;25°C)</span>
+              <span className="w-2 h-2 rounded-xs bg-[#d62828] shrink-0" />
+              <span>Warm (&gt;25°C)</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-sm bg-[#00a8cc]" />
-              <span>Thermocline Transition (10-20°C)</span>
+              <span className="w-2 h-2 rounded-xs bg-[#00a8cc] shrink-0" />
+              <span>Thermocline</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-sm bg-[#0a2558]" />
-              <span>Deep Cold Core (&lt;6°C)</span>
+              <span className="w-2 h-2 rounded-xs bg-[#0a2558] shrink-0" />
+              <span>Deep (&lt;6°C)</span>
             </div>
-          </div>
-
-          {/* Orbit Control Tip */}
-          <div className="text-[9px] text-slate-500 flex items-center gap-1 mt-1">
-            <Info className="w-3 h-3 text-cyan-400 shrink-0" />
-            <span>Drag block to rotate, scroll to zoom</span>
           </div>
         </div>
       </div>
 
       {/* ─── 4. BOTTOM DEPTH SCRUBBER CONTROLS ─── */}
-      <div className="relative z-10 w-full px-6 py-4 pointer-events-auto">
-        <div className="max-w-4xl mx-auto glass-hud p-4 rounded-2xl border border-cyan-500/20 backdrop-blur-xl shadow-2xl flex flex-col gap-3">
+      <div className="relative z-10 w-full px-3 sm:px-5 py-2.5 sm:py-3 pointer-events-auto">
+        <div className="max-w-3xl mx-auto bg-white/95 backdrop-blur-md p-3 sm:p-3.5 rounded-xl border border-slate-200/90 shadow-xl flex flex-col gap-2.5 text-slate-900">
           {/* Slider Header */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Thermometer className="w-4 h-4 text-cyan-400" />
-              <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+            <div className="flex items-center gap-1.5">
+              <Thermometer className="w-3.5 h-3.5 text-slate-700 stroke-[2.2]" />
+              <span className="text-[11px] font-bold uppercase tracking-wider font-mono text-slate-900">
                 Depth Scrubber Plane
-              </span>
-              <span className="text-[10px] text-slate-400">
-                (Sweeps highlighted marker slice through the 3D block)
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {/* Play / Auto Animation Toggle */}
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className={`px-3 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all ${
                   isPlaying
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-400/50'
-                    : 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 hover:bg-cyan-500/30'
+                    ? 'bg-sky-600 text-white shadow-xs'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                 }`}
               >
-                {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                <span>{isPlaying ? 'Pause Sweep' : 'Auto Sweep'}</span>
+                {isPlaying ? <Pause className="w-3 h-3 stroke-[2.2]" /> : <Play className="w-3 h-3 stroke-[2.2]" />}
+                <span>{isPlaying ? 'Pause' : 'Auto Sweep'}</span>
               </button>
 
               {/* Exact Depth Counter */}
-              <div className="px-3 py-1 rounded-xl bg-[#081326] border border-cyan-400/30 font-mono text-xs font-bold text-cyan-300">
+              <div className="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-mono text-[11px] font-bold shadow-xs">
                 {Math.round(currentDepth)} m
               </div>
             </div>
           </div>
 
           {/* Depth Range Slider Input */}
-          <div className="relative flex flex-col gap-1.5">
+          <div className="relative flex flex-col gap-1">
             <input
               type="range"
               min="0"
@@ -406,31 +390,31 @@ export const OceanBlockView: React.FC<OceanBlockViewProps> = ({
               step="1"
               value={currentDepth}
               onChange={(e) => onDepthChange(parseFloat(e.target.value))}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400 focus:outline-none"
+              className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-600 focus:outline-none"
             />
 
             {/* Slider Ticks */}
-            <div className="flex justify-between px-0.5 text-[9.5px] font-mono text-slate-400">
-              <span>0m (Surface)</span>
+            <div className="flex justify-between px-0.5 text-[8.5px] font-mono font-medium text-slate-500">
+              <span>0m</span>
               <span>200m</span>
               <span>400m</span>
               <span>600m</span>
               <span>800m</span>
-              <span>1000m (Abyssal)</span>
+              <span>1000m</span>
             </div>
           </div>
 
           {/* Preset Buttons */}
-          <div className="flex items-center gap-2 pt-2 border-t border-white/5 overflow-x-auto">
-            <span className="text-[10px] text-slate-400 font-mono shrink-0">Quick Layers:</span>
+          <div className="flex items-center gap-1.5 pt-1.5 border-t border-slate-100 overflow-x-auto pb-0.5">
+            <span className="text-[9.5px] font-mono font-semibold text-slate-500 shrink-0">Quick Jump:</span>
             {depthPresets.map((preset) => (
               <button
                 key={preset.depth}
                 onClick={() => onDepthChange(preset.depth)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all shrink-0 ${
+                className={`px-2 py-0.5 rounded-md text-[10.5px] font-mono transition-all shrink-0 ${
                   Math.abs(currentDepth - preset.depth) < 15
-                    ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400 font-bold shadow-sm shadow-cyan-500/20'
-                    : 'bg-[#09152b] text-slate-400 hover:text-slate-200 border border-white/5 hover:border-white/20'
+                    ? 'bg-slate-900 text-white font-bold shadow-xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium'
                 }`}
               >
                 {preset.label} ({preset.tag})

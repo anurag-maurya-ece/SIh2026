@@ -1,40 +1,56 @@
-import React from 'react';
-import { Clock, Radio } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Clock, Radio, Cpu } from 'lucide-react';
 
 interface BottomStatusBarProps {
   coordinatesStr?: string;
 }
 
 export const BottomStatusBar: React.FC<BottomStatusBarProps> = ({
-  coordinatesStr = '24.42° N, 44.05° W',
+  coordinatesStr = '24.42° N, 44.05° E',
 }) => {
+  const [timeStr, setTimeStr] = useState<string>('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTimeStr(now.toUTCString().slice(17, 25) + ' UTC');
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <footer className="w-full h-9 bg-[#060913]/95 border-t border-white/5 px-6 flex items-center justify-between pointer-events-auto select-none z-30 text-[11px] text-slate-400 font-sans">
-      {/* 1. Left: Live Data & Timestamp */}
+    <footer className="w-full h-9 md:h-10 bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-3 md:px-6 flex items-center justify-between pointer-events-auto select-none z-30 text-[10px] md:text-[11px] text-slate-700 font-sans shadow-xs">
+      {/* 1. Left: Live Data & UTC Clock Pill */}
       <div className="flex items-center gap-2">
-        <Clock className="w-3.5 h-3.5 text-slate-400" />
-        <span className="text-slate-300 font-medium">Live Data</span>
-        <span className="text-slate-400">•</span>
-        <span className="text-slate-400">Last updated 2 min ago</span>
-      </div>
-
-      {/* 2. Center: Monospace Coordinates */}
-      <div className="font-mono text-slate-200 font-medium">
-        {coordinatesStr}
-      </div>
-
-      {/* 3. Right: MoES Connection & Partner Logos */}
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1.5 text-cyan-400 font-medium">
-          <Radio className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Connected to MoES</span>
+        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-semibold text-[9.5px] md:text-[10px] shadow-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>LIVE</span>
         </div>
-        <div className="h-3 w-[1px] bg-white/10" />
-        <div className="flex items-center gap-2 text-[10px] tracking-wider text-slate-400 font-semibold uppercase font-mono">
+        <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-800 border border-slate-200/80 font-mono font-medium text-[10px] md:text-[11px]">
+          <Clock className="w-3 h-3 text-sky-600" />
+          <span>{timeStr || '00:00:00 UTC'}</span>
+        </div>
+      </div>
+
+      {/* 2. Center: Clean Monospace Coordinates Pill */}
+      <div className="hidden md:flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-white font-mono text-[11px] shadow-xs font-semibold">
+        <span className="text-[9.5px] uppercase text-sky-400">Target:</span>
+        <span>{coordinatesStr}</span>
+      </div>
+
+      {/* 3. Right: MoES / INCOIS Connection & Partner Badges */}
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-50 text-slate-800 border border-slate-200 font-medium text-[10px] md:text-[11px] shadow-xs">
+          <Radio className="w-3 h-3 text-sky-600 stroke-[2.2]" />
+          <span>MoES • INCOIS Node</span>
+        </div>
+        <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100/80 text-slate-600 border border-slate-200 text-[10px] font-medium font-mono">
           <span>ISRO</span>
-          <span>|</span>
+          <span className="text-slate-400">•</span>
           <span>NASA</span>
-          <span>|</span>
+          <span className="text-slate-400">•</span>
           <span>Copernicus</span>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, ThreeEvent } from '@react-three/fiber';
-import { ArgoFloat, latLonToVector3 } from '../utils/geo';
+import { ArgoFloat, latLonToVector3, isWithinIndianOcean } from '../utils/geo';
 
 interface ArgoMarkersProps {
   floats: ArgoFloat[];
@@ -51,8 +51,7 @@ const SingleArgoPin: React.FC<{
     }
   };
 
-  const isIndianOcean = float.id.startsWith('ARGO-IN');
-  const primaryColor = isIndianOcean ? '#00f2fe' : '#ffb703';
+  const primaryColor = '#00f2fe';
 
   return (
     <group
@@ -77,7 +76,7 @@ const SingleArgoPin: React.FC<{
       {/* Floating beacon stalk */}
       <mesh position={[0, 0.045, 0]}>
         <cylinderGeometry args={[0.003, 0.003, 0.05, 8]} />
-        <meshBasicMaterial color={primaryColor} transparent opacity={0.8} />
+        <meshBasicMaterial color={primaryColor} transparent opacity={0.85} />
       </mesh>
 
       {/* Pulsing beacon ring */}
@@ -90,7 +89,7 @@ const SingleArgoPin: React.FC<{
         <meshBasicMaterial
           color={primaryColor}
           transparent
-          opacity={0.6}
+          opacity={0.65}
           side={THREE.DoubleSide}
           depthWrite={false}
         />
@@ -108,9 +107,12 @@ export const ArgoMarkers: React.FC<ArgoMarkersProps> = ({
 }) => {
   if (!visible || !floats || floats.length === 0) return null;
 
+  // STRICTLY filter only floats within the Indian Ocean Problem Statement bounds
+  const indianOceanFloats = floats.filter((f) => isWithinIndianOcean(f.lat, f.lon));
+
   return (
     <group>
-      {floats.map((float) => (
+      {indianOceanFloats.map((float) => (
         <SingleArgoPin
           key={float.id}
           float={float}

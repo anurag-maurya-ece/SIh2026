@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Globe,
   Database,
@@ -6,7 +6,8 @@ import {
   BarChart3,
   Info,
   Search,
-  Sun,
+  Menu,
+  X,
 } from 'lucide-react';
 
 interface TopNavbarProps {
@@ -22,41 +23,84 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
   searchQuery,
   onSearchChange,
 }) => {
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+
   const navLinks = [
-    { id: 'explore', label: 'Explore', icon: Globe },
-    { id: 'data', label: 'Data', icon: Database },
-    { id: 'satellites', label: 'Satellites', icon: Satellite },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'about', label: 'About', icon: Info },
+    { id: 'explore', label: '3D Globe', shortLabel: 'Globe', icon: Globe },
+    { id: 'data', label: 'Ocean Block', shortLabel: 'Block', icon: Database },
+    { id: 'satellites', label: 'Constellation', shortLabel: 'Satellites', icon: Satellite },
+    { id: 'analytics', label: 'Telemetry', shortLabel: 'Telemetry', icon: BarChart3 },
+    { id: 'about', label: 'Mission Info', shortLabel: 'Mission', icon: Info },
   ];
 
   return (
-    <header className="w-full h-16 bg-[#070c18]/90 border-b border-cyan-500/10 px-6 flex items-center justify-between pointer-events-auto select-none z-30 backdrop-blur-md">
-      {/* 1. Left Brand & Tagline */}
-      <div className="flex items-center gap-3">
-        {/* Wave logo (cyan-to-blue gradient square with overlapping curved wave lines) */}
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 p-[1px] shadow-md shadow-cyan-500/20 flex items-center justify-center">
-          <div className="w-full h-full bg-[#060c19] rounded-[11px] flex items-center justify-center">
-            <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2 7c2 .8 4 .8 6 0 2-.8 4-.8 6 0 2 .8 4 .8 6 0" />
-              <path d="M2 12c2 .8 4 .8 6 0 2-.8 4-.8 6 0 2 .8 4 .8 6 0" />
-              <path d="M2 17c2 .8 4 .8 6 0 2-.8 4-.8 6 0 2 .8 4 .8 6 0" />
-            </svg>
-          </div>
+    <header className="w-full h-14 md:h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/90 px-3 md:px-6 flex items-center justify-between pointer-events-auto select-none z-30 shadow-xs relative">
+      {/* 1. Left Brand & Institutional Badges */}
+      <div className="flex items-center gap-2.5 md:gap-3 shrink-0">
+        {/* Modern 3D Subsurface Ocean AI Emblem */}
+        <div className="w-8 h-8 md:w-9.5 md:h-9.5 rounded-xl bg-slate-950 border border-slate-800/80 flex items-center justify-center shadow-xs p-1 shrink-0 group cursor-pointer hover:bg-slate-900 transition-colors">
+          <svg className="w-full h-full" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Hexagonal 3D Ocean Volume Shell */}
+            <path
+              d="M16 3L28 9.5V22.5L16 29L4 22.5V9.5L16 3Z"
+              fill="#060A14"
+              stroke="#38BDF8"
+              strokeWidth="1.8"
+              strokeLinejoin="round"
+            />
+            {/* Top Surface SST Layer Diamond */}
+            <path
+              d="M16 3L28 9.5L16 16L4 9.5L16 3Z"
+              fill="#0284C7"
+              fillOpacity="0.4"
+              stroke="#38BDF8"
+              strokeWidth="1.4"
+              strokeLinejoin="round"
+            />
+            {/* Subsurface Thermocline Strata (Cyan) */}
+            <path
+              d="M4 14L16 20.5L28 14"
+              stroke="#38BDF8"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            {/* Intermediate Depth Strata (Emerald) */}
+            <path
+              d="M4 18.5L16 25L28 18.5"
+              stroke="#34D399"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            {/* Deep Volumetric Sounding Axis */}
+            <path
+              d="M16 16V29"
+              stroke="#FFFFFF"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeDasharray="1.5 1.5"
+            />
+            {/* Surface AI Sensor Focal Beacon */}
+            <circle cx="16" cy="9.5" r="2" fill="#38BDF8" stroke="#000000" strokeWidth="0.6" />
+          </svg>
         </div>
 
         <div>
-          <h1 className="text-base font-bold text-white tracking-tight leading-none">
-            Ocean Embed
-          </h1>
-          <span className="text-[8.5px] tracking-[0.18em] text-slate-400 uppercase font-semibold block mt-1">
-            Real-Time Ocean Intelligence
+          <div className="flex items-center gap-1.5">
+            <h1 className="text-sm md:text-base font-display font-bold tracking-tight text-slate-900">
+              Ocean<span className="bg-sky-600 text-white px-1.5 py-0.5 rounded-md font-bold text-xs ml-0.5 shadow-xs">Embed</span>
+            </h1>
+            <span className="px-1.5 md:px-2 py-0.5 rounded-md text-[9px] md:text-[10px] font-mono font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+              PS 26066
+            </span>
+          </div>
+          <span className="text-[9px] md:text-[10px] text-slate-500 font-medium hidden sm:block leading-none mt-0.5">
+            Ministry of Earth Sciences • INCOIS Ocean Intelligence
           </span>
         </div>
       </div>
 
-      {/* 2. Center Nav Links with Icons */}
-      <nav className="flex items-center gap-8">
+      {/* 2. Center Nav Links (Horizontally scrollable on mobile) */}
+      <nav className="flex items-center gap-1 bg-slate-100/90 border border-slate-200/90 p-1 rounded-xl shadow-xs max-w-[55vw] md:max-w-none overflow-x-auto no-scrollbar">
         {navLinks.map((link) => {
           const Icon = link.icon;
           const isActive = activeNav === link.id;
@@ -64,49 +108,71 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
             <button
               key={link.id}
               onClick={() => onNavChange(link.id)}
-              className={`flex items-center gap-2 text-xs font-medium py-5 relative transition-all duration-200 ${
+              className={`flex items-center gap-1.5 text-[11px] md:text-xs px-2.5 md:px-3.5 py-1 md:py-1.5 rounded-lg font-semibold whitespace-nowrap transition-all duration-150 ${
                 isActive
-                  ? 'text-cyan-400 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-slate-900 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
               }`}
             >
-              <Icon className="w-4 h-4 shrink-0" />
-              <span>{link.label}</span>
-              {isActive && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 shadow-sm shadow-cyan-400" />
-              )}
+              <Icon className="w-3.5 h-3.5 shrink-0 stroke-[2.2]" />
+              <span className="hidden sm:inline">{link.label}</span>
+              <span className="sm:hidden">{link.shortLabel}</span>
             </button>
           );
         })}
       </nav>
 
-      {/* 3. Right Search Bar, Theme Toggle & Avatar */}
-      <div className="flex items-center gap-3">
-        {/* Search Bar */}
-        <div className="relative w-64">
-          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+      {/* 3. Right Pill Tags & Search */}
+      <div className="flex items-center gap-2 md:gap-2.5 shrink-0">
+        {/* Live Status Pill Badge */}
+        <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/90 text-[10.5px] font-semibold shadow-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>INCOIS LIVE</span>
+        </div>
+
+        {/* Clean Search Input (Desktop) */}
+        <div className="relative hidden md:block w-44 lg:w-52">
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none stroke-[2]" />
           <input
             type="text"
-            placeholder="Search location, coordinates, or region..."
+            placeholder="Search coordinates..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full h-8 pl-9 pr-3 text-xs bg-[#0b1325]/80 border border-white/10 rounded-full text-slate-200 placeholder-slate-400 outline-none focus:border-cyan-400/50 transition-all font-sans"
+            className="w-full h-8.5 pl-8 pr-7 text-xs bg-slate-50/90 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 font-mono font-medium shadow-xs focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-500/15 transition-all"
           />
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9.5px] font-mono font-medium text-slate-400 px-1 py-0.2 rounded border border-slate-200 bg-white pointer-events-none">
+            /
+          </span>
         </div>
 
-        {/* Divider */}
-        <div className="h-5 w-[1px] bg-white/10" />
-
-        {/* Sun / Theme Toggle Button */}
-        <button className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors">
-          <Sun className="w-4 h-4" />
+        {/* Mobile Search Toggle Button */}
+        <button
+          onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+          className="md:hidden w-8 h-8 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-700 shadow-xs"
+        >
+          {isMobileSearchOpen ? <X className="w-3.5 h-3.5" /> : <Search className="w-3.5 h-3.5" />}
         </button>
 
-        {/* Avatar Profile Badge (OE in cyan outline circle) */}
-        <div className="w-8 h-8 rounded-full border border-cyan-400 text-cyan-300 bg-[#0c1e3d] flex items-center justify-center font-bold text-xs font-mono shadow-sm shadow-cyan-500/20 cursor-pointer hover:scale-105 transition-transform">
-          OE
+        {/* User / Station Avatar Badge */}
+        <div className="w-8 h-8 md:w-8.5 md:h-8.5 rounded-lg border border-slate-800 text-white bg-slate-900 flex items-center justify-center font-bold text-[11px] font-mono shadow-xs">
+          IN
         </div>
       </div>
+
+      {/* Mobile Search Overlay Bar */}
+      {isMobileSearchOpen && (
+        <div className="absolute top-full left-0 right-0 p-2.5 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-md z-40 flex items-center gap-2 md:hidden">
+          <Search className="w-4 h-4 text-slate-500 shrink-0" />
+          <input
+            type="text"
+            placeholder="Search coordinates (e.g. 12.5 N, 75.2 E)..."
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full h-8 px-2.5 text-xs bg-slate-50 border border-slate-200 rounded-lg font-mono font-medium text-slate-900 focus:outline-none focus:border-sky-500"
+            autoFocus
+          />
+        </div>
+      )}
     </header>
   );
 };
