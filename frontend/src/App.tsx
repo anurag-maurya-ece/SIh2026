@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
@@ -32,6 +32,79 @@ import {
   prefetchAllDepths,
 } from './services/api';
 import { GridPoint, ProfilePoint, ArgoFloat, ModelStats } from './utils/geo';
+
+interface GlobeGroupProps {
+  autoRotate: boolean;
+  gridData: GridPoint[];
+  activeLayer: string;
+  argoFloats: ArgoFloat[];
+  onSelectCoordinate: (lat: number, lon: number) => void;
+  onLoadFloatProfile: (float: ArgoFloat) => void;
+  onHoverFloat: (float: ArgoFloat | null) => void;
+  onOpenDetails: () => void;
+}
+
+const GlobeGroup: React.FC<GlobeGroupProps> = ({
+  autoRotate,
+  gridData,
+  activeLayer,
+  argoFloats,
+  onSelectCoordinate,
+  onLoadFloatProfile,
+  onHoverFloat,
+  onOpenDetails,
+}) => {
+  const globeGroupRef = useRef<THREE.Group>(null);
+
+  // Synchronous auto-rotation for the entire Globe System
+  // Heatmap, boundary perimeter, and Argo pins stay locked to Earth's geography
+  useFrame((_, delta) => {
+    if (globeGroupRef.current && autoRotate) {
+      globeGroupRef.current.rotation.y += delta * 0.03;
+    }
+  });
+
+  return (
+    <group ref={globeGroupRef}>
+      {/* Earth 3D Core with NASA Day, Bump & Specular */}
+      <Earth
+        radius={2.0}
+        onSelectCoordinate={onSelectCoordinate}
+      />
+
+      {/* Ocean Heatmap Dynamic Canvas Overlay (Visible when SST layer active) */}
+      <TemperatureOverlay
+        grid={gridData}
+        radius={2.003}
+        visible={activeLayer === 'sst'}
+      />
+
+      {/* Indian Ocean MoES Focus Boundary */}
+      <IndianOceanBoundary
+        radius={2.012}
+        visible={true}
+      />
+
+      {/* Argo Float Observation Pins */}
+      <ArgoMarkers
+        floats={argoFloats}
+        radius={2.016}
+        visible={true}
+        onSelectFloat={onLoadFloatProfile}
+        onHoverFloat={onHoverFloat}
+      />
+
+      {/* Indian Ocean Concentric Ripple Target Marker */}
+      <IndianOceanRippleMarker
+        lat={-12.0}
+        lon={68.0}
+        label="Indian Ocean"
+        globeRadius={2.0}
+        onClick={onOpenDetails}
+      />
+    </group>
+  );
+};
 
 export function App() {
   // Navigation & Search State
@@ -177,45 +250,16 @@ export function App() {
             <SunLight />
             <Starfield count={3000} />
 
-            {/* Earth 3D Core with NASA Day, Bump & Specular */}
-            <Earth
-              radius={2.0}
+            {/* Rotating Globe Group: Synchronizes Earth, Heatmap, Boundary & Float Pins */}
+            <GlobeGroup
               autoRotate={autoUpdate}
+              gridData={gridData}
+              activeLayer={activeLayer}
+              argoFloats={argoFloats}
               onSelectCoordinate={handleSelectCoordinate}
-            />
-
-            {/* Ocean Heatmap Dynamic Canvas Overlay (Visible when SST layer active) */}
-            <TemperatureOverlay
-              grid={gridData}
-              radius={2.003}
-              visible={activeLayer === 'sst'}
-            />
-
-            {/* Indian Ocean MoES Focus Boundary */}
-            <IndianOceanBoundary
-              radius={2.012}
-              visible={true}
-            />
-
-            {/* Argo Float Observation Pins */}
-            <ArgoMarkers
-              floats={argoFloats}
-              radius={2.016}
-              visible={true}
-              onSelectFloat={(f) => handleLoadFloatProfile(f)}
-              onHoverFloat={(f) => setHoveredFloat(f)}
-            />
-
-            {/* Satellites Orbiting Tracks and Line-Art Glyphs */}
-            <SatellitesOrbit globeRadius={2.0} />
-
-            {/* Indian Ocean Concentric Ripple Target Marker */}
-            <IndianOceanRippleMarker
-              lat={-12.0}
-              lon={68.0}
-              label="Indian Ocean"
-              globeRadius={2.0}
-              onClick={() => setIsDetailsModalOpen(true)}
+              onLoadFloatProfile={handleLoadFloatProfile}
+              onHoverFloat={setHoveredFloat}
+              onOpenDetails={() => setIsDetailsModalOpen(true)}
             />
 
             {/* Atmospheric Rim Glow Shell */}

@@ -1,17 +1,15 @@
 import React, { useRef, useMemo } from 'react';
 import * as THREE from 'three';
-import { useFrame, useLoader, ThreeEvent } from '@react-three/fiber';
+import { useLoader, ThreeEvent } from '@react-three/fiber';
 import { vector3ToLatLon } from '../utils/geo';
 
 interface EarthProps {
   radius?: number;
-  autoRotate?: boolean;
   onSelectCoordinate?: (lat: number, lon: number) => void;
 }
 
 export const Earth: React.FC<EarthProps> = ({
   radius = 2.0,
-  autoRotate = true,
   onSelectCoordinate,
 }) => {
   const earthRef = useRef<THREE.Mesh>(null);
@@ -28,13 +26,6 @@ export const Earth: React.FC<EarthProps> = ({
     bumpMap.colorSpace = THREE.LinearSRGBColorSpace;
     specularMap.colorSpace = THREE.LinearSRGBColorSpace;
   }, [colorMap, bumpMap, specularMap]);
-
-  // Subtle auto-rotation when idle
-  useFrame((_, delta) => {
-    if (earthRef.current && autoRotate) {
-      earthRef.current.rotation.y += delta * 0.03;
-    }
-  });
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
