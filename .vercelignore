@@ -1,19 +1,11 @@
-# Exclude frontend source & build from Python function
-frontend/node_modules/
-frontend/src/
-frontend/public/
-frontend/index.html
-frontend/tsconfig*.json
-frontend/vite.config.ts
-
-# Exclude heavy documents & screenshots from serverless function
+# Exclude heavy documents & secondary repositories
 submission/*.pdf
 OceanEmbed_Platform_Feature_Guide.pdf
-docs/
-assets/
 hf_space/
 
-# Exclude cache & git
+# Exclude dependencies and caches
+node_modules/
+frontend/node_modules/
 .git/
 .github/
 __pycache__/

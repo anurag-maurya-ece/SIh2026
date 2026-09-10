@@ -65,25 +65,39 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
         </div>
 
         {/* Hero Sea Surface Temperature Card (Professional Deep Ocean Theme) */}
-        <div className="bg-gradient-to-br from-slate-900 via-slate-850 to-blue-950 rounded-xl p-3 border border-slate-800/80 shadow-sm flex items-center justify-between text-white">
-          <div>
-            <div className="text-[9px] font-semibold uppercase tracking-wider flex items-center gap-1.5 text-sky-300">
-              <Thermometer className="w-3 h-3 stroke-[2.2]" />
-              <span>Sea Surface Temp</span>
+        <div className="bg-gradient-to-br from-slate-900 via-slate-850 to-blue-950 rounded-xl p-3 border border-slate-800/80 shadow-sm flex flex-col gap-2 text-white">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-[9px] font-semibold uppercase tracking-wider flex items-center gap-1.5 text-sky-300">
+                <Thermometer className="w-3 h-3 stroke-[2.2]" />
+                <span>Sea Surface Temp</span>
+              </div>
+              <div className="flex items-baseline gap-1 mt-0.5">
+                <span className="text-2xl font-mono font-bold text-white tracking-tight leading-none">
+                  {surfaceTemp.toFixed(1)}
+                </span>
+                <span className="text-sm font-mono font-semibold text-sky-400">°C</span>
+              </div>
             </div>
-            <div className="flex items-baseline gap-1 mt-0.5">
-              <span className="text-2xl font-mono font-bold text-white tracking-tight leading-none">
-                {surfaceTemp.toFixed(1)}
+            <div className="text-right">
+              <span className="inline-block px-2 py-0.5 rounded-md text-[9px] font-mono font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                0.25° Grid
               </span>
-              <span className="text-sm font-mono font-semibold text-sky-400">°C</span>
+              <div className="text-[8.5px] font-medium text-slate-300 mt-1 font-mono">
+                Team REGALIA
+              </div>
             </div>
           </div>
-          <div className="text-right">
-            <span className="inline-block px-2 py-0.5 rounded-md text-[9px] font-mono font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30">
-              SST MODIS
-            </span>
-            <div className="text-[8.5px] font-medium text-slate-300 mt-1 font-mono">
-              In-situ Ground Truth
+
+          {/* 5 Input Feature Badges (SST, SSS, SLA, Wind, Chl) */}
+          <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+            <span className="text-[8.5px] font-mono text-slate-400 font-semibold uppercase">Fused Inputs:</span>
+            <div className="flex items-center gap-1">
+              <span className="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">SST</span>
+              <span className="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30">SSS</span>
+              <span className="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30">SLA</span>
+              <span className="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-400/30">Wind</span>
+              <span className="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">Chl</span>
             </div>
           </div>
         </div>
