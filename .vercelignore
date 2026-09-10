@@ -1,0 +1,24 @@
+# Exclude frontend source & build from Python function
+frontend/node_modules/
+frontend/src/
+frontend/public/
+frontend/index.html
+frontend/tsconfig*.json
+frontend/vite.config.ts
+
+# Exclude heavy documents & screenshots from serverless function
+submission/*.pdf
+OceanEmbed_Platform_Feature_Guide.pdf
+docs/
+assets/
+hf_space/
+
+# Exclude cache & git
+.git/
+.github/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
