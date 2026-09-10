@@ -1,242 +1,163 @@
-# OceanEmbed — AI-Driven 3D Subsurface Ocean Digital Twin 🌊🌍
+# OceanEmbed – AI Subsurface Ocean Digital Twin
 
-[![SIH 2026](https://img.shields.io/badge/SIH-2026-blue.svg)](https://sih.gov.in/)
-[![Problem Statement](https://img.shields.io/badge/PS_ID-26066-orange.svg)](https://sih.gov.in/)
-[![Ministry](https://img.shields.io/badge/Ministry-MoES_%2F_INCOIS-emerald.svg)](https://moes.gov.in/)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg)](https://fastapi.tiangolo.com/)
-[![Three.js](https://img.shields.io/badge/Frontend-React_%2B_Three.js-black.svg)](https://threejs.org/)
-[![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
-
-An institutional, interactive 3D digital twin and physics-informed deep learning platform that reconstructs continuous **0 to 1000m subsurface ocean temperature and salinity profiles** from surface satellite observations across the Indian Ocean basin.
-
----
+This repository contains the complete implementation for **Smart India Hackathon (SIH 2026)** Problem Statement **26066**.
 
 ## 1. Project Information
 
-- **Project Title:** OceanEmbed — AI-Driven 3D Subsurface Ocean Digital Twin
+- **Project Title:** OceanEmbed – AI-Driven 3D Subsurface Ocean Digital Twin
 - **PS ID:** 26066
 - **PS Title:** Satellite Embedding-Based Deep Learning Framework for Reconstruction of Subsurface Ocean Temperature from Surface Satellite Observations
 - **Category:** Software
 - **Theme:** Clean & Green Ocean / Disaster Management & Climate Modeling
-- **Target Organization / Ministry:** Ministry of Earth Sciences (MoES) / Indian National Centre for Ocean Information Services (INCOIS)
-- **Spatial Coverage:** Indian Ocean Boundary ($30^\circ\text{N}$ to $-40^\circ\text{S}$, $30^\circ\text{E}$ to $120^\circ\text{E}$)
-- **Vertical Domain:** $0\text{m}$ (Surface) to $1000\text{m}$ (Bathypelagic Floor)
-
----
 
 ## 2. Problem Statement
 
-In-situ oceanographic sensors like **Argo Floats** are sparse—typically only one float exists per $300\text{ km} \times 300\text{ km}$ spatial block. While Earth Observation satellites provide high-resolution continuous measurements of the ocean surface (Sea Surface Temperature, Sea Surface Height Anomaly, Wind Stress), they cannot penetrate into the deep ocean.
-
-Subsurface thermal and salinity structures down to **1000m** govern critical Earth systems:
-1. **Tropical Cyclone Intensification:** Driven by Ocean Heat Content (OHC) and Tropical Cyclone Heat Potential (TCHP).
-2. **Monsoon Dynamics:** Coupled ocean-atmosphere heat exchange that controls the Indian Summer Monsoon.
-3. **Marine Fisheries:** Thermocline depth and upwelling zones dictating nutrient-rich fishing grounds.
-4. **Naval Defense & Acoustics:** Deep sound channels (SOFAR) and acoustic shadow zone propagation.
-
-There is an urgent need for an AI-powered system that accurately bridges the gap between surface satellite data and full 3D subsurface thermal fields in real-time.
-
----
+In-situ oceanographic sensors like **Argo Floats** are sparse across the Indian Ocean (typically only one float per $300\text{ km} \times 300\text{ km}$ area). Satellite sensors measure surface parameters (Sea Surface Temperature, Sea Surface Height Anomaly, Surface Wind Stress) with high resolution but cannot directly penetrate the ocean interior down to 1000m depth, which is critical for cyclone heat potential forecasting, monsoon dynamics, and naval operations.
 
 ## 3. Proposed Solution
 
-**OceanEmbed** addresses this challenge through a 3-tier deep neural representation architecture:
-
-1. **Multi-Satellite Ingestion:** Integrates live surface boundary feeds from Sentinel-6, Jason-3 (SSHA), INSAT-3DR (SST), and Oceansat-3 (Wind Stress).
-2. **Physics-Informed Deep Neural Inversion:** Employs a deep neural network with physical loss constraints (monotonic thermal descent and thermocline gradient preservation) to predict vertical profiles $T(z)$ and $S(z)$ for $z \in [0, 1000\text{m}]$ in $<12\text{ms}$.
-3. **Interactive 3D WebGL Digital Twin:** Visualizes continuous 3D planetary heatmaps, real-time satellite constellation orbits, 0–1000m depth planes, and standalone 3D volumetric water column slices.
-
----
+OceanEmbed uses a **Physics-Informed Deep Neural Representation Network** to reconstruct continuous 0–1000m 3D subsurface temperature and salinity profiles from multi-satellite surface observations in real-time (<12ms), visualized through an interactive 3D WebGL Digital Twin globe.
 
 ## 4. Key Features
 
-### 🌐 1. Interactive 3D Geospatial Digital Twin
-- **Photorealistic Earth Mesh:** NASA bathymetry, atmospheric Rayleigh scattering, and dynamic cloud layers.
-- **Satellite Constellation Orbits:** Real-time 3D tracking of 6 Earth Observation satellites (Sentinel-6, Jason-3, INSAT-3DR, Oceansat-3, SWOT, SARAL).
-- **MoES Focus Boundary:** Glowing 3D polygon outlining the exact Indian Ocean research perimeter.
-- **In-Situ Argo Float Array:** Interactive pulsing 3D pins displaying real-time floating CTD telemetry.
-
-### 🌊 2. Continuous 0–1000m Depth Exploration
-- **Continuous Depth Slider:** Sweeps smoothly from surface ($0\text{m}$) to abyssal floor ($1000\text{m}$) across Epipelagic, Thermocline, and Bathypelagic zones.
-- **Auto-Sweep Animation:** Automated continuous vertical scanning at 60 FPS.
-- **Subsurface Cutaway Pillar:** Physical volumetric depth pillar rendering internal strata rings at the active coordinate.
-
-### 🧊 3. Standalone 3D Ocean Block Slice (`OceanBlockView`)
-- Localized 3D volumetric water cube with multi-angle camera presets (**Isometric**, **Front**, **Side**, **Top**).
-- Compact Subsurface Telemetry HUD and continuous thermal gradient laser plane.
-
-### 📊 4. Full CTD Vertical Profile & Export
-- Interactive vertical temperature chart highlighting the Mixed Layer Depth (MLD) and thermocline drop curve.
-- Export profile data in CSV and JSON formats for research reporting.
-
-### 🏛️ 5. Scientific Governance Modals
-- **Constellation Modal:** Satellite payload packages, orbital health, and pass tracking.
-- **Telemetry Analytics Modal:** Global model verification metrics ($R^2 = 0.945$, $\text{RMSE} = 0.28^\circ\text{C}$, $\text{MAE} = 0.21^\circ\text{C}$).
-- **Mission Info Modal:** 3-tier deep neural architecture and operational impact matrix.
-
----
+- **3D Interactive Digital Twin Globe:** High-resolution photorealistic Earth with real-time satellite constellation orbits (Sentinel-6, Jason-3, INSAT-3DR, Oceansat-3, SWOT, SARAL).
+- **Continuous 0m to 1000m Depth Scrubbing:** Live dynamic sweeping across Epipelagic, Thermocline, and Bathypelagic ocean layers with auto-sweep animation.
+- **Standalone 3D Volumetric Water Column Slice:** Localized 3D ocean block (`OceanBlockView`) with multi-angle cameras (Isometric, Front, Side, Top).
+- **Interactive Argo Float Array Pins:** In-situ CTD observation stations with live depth profile charts and Mixed Layer Depth (MLD) markers.
+- **Scientific Governance Modals:** Satellite Constellation explorer, AI Telemetry Analytics ($R^2 = 0.945$, $\text{RMSE} = 0.28^\circ\text{C}$), and MoES Mission Architecture.
+- **Sub-Millisecond In-Memory Caching & REST API:** FastAPI backend serving gridded predictions and profiles in $<12\text{ms}$.
 
 ## 5. Technology Stack
 
-- **Frontend:** React 18, TypeScript, Three.js, React Three Fiber (`@react-three/fiber`), `@react-three/drei`, Tailwind CSS, Lucide Icons, Recharts
-- **Backend:** Python 3.9+, FastAPI, Uvicorn, Pydantic, NumPy, SciPy
-- **Machine Learning:** PyTorch / ONNX Physics-Informed Neural Network (PINN)
-- **Data & Caching:** In-Memory Multi-Dimensional Tensor Cache, Structured JSON, NetCDF4 / ERDDAP Integration
-- **Documentation & Reporting:** ReportLab PDF Engine, KaTeX / Markdown
-- **Deployment:** Docker, Vercel, Hugging Face Spaces, Railway
+- **Frontend:** React, TypeScript, Three.js, React Three Fiber, Tailwind CSS, Recharts, Lucide Icons
+- **Backend:** Python, FastAPI, Uvicorn, Pydantic
+- **Machine Learning:** PyTorch, NumPy, SciPy
+- **Database & Caching:** In-Memory Multi-Dimensional Tensor Cache, Structured JSON, NetCDF4 / ERDDAP Integration
+- **Deployment:** Docker / Cloud / Vercel
 
----
+## 6. Architecture
 
-## 6. System Architecture
-
-See detailed technical architecture in [docs/architecture.md](docs/architecture.md).
+See [docs/architecture.md](docs/architecture.md).
 
 ```text
-+-------------------------------------------------------------------------+
-|                  SATELLITE OBSERVATION LAYER (Surface)                  |
-|   Sentinel-6 / Jason-3       INSAT-3DR (SST)       Oceansat-3 / SWOT    |
-+------------------------------------+------------------------------------+
-                                     |
-                                     v
-+-------------------------------------------------------------------------+
-|               PHYSICS-INFORMED NEURAL NETWORK (Inference)               |
-|      [Lat, Lon, Depth, SST, SSHA, Wind_U, Wind_V] -> T(z), S(z)         |
-|               (RMSE: 0.28°C | R²: 0.945 | Latency: <12ms)               |
-+------------------------------------+------------------------------------+
-                                     |
-                                     v
-+-------------------------------------------------------------------------+
-|                    FASTAPI REST MICROSERVICE LAYER                      |
-|          /api/predict_grid  |  /api/predict_profile  |  /api/stats      |
-+------------------------------------+------------------------------------+
-                                     |
-                                     v
-+-------------------------------------------------------------------------+
-|                 INTERACTIVE 3D WEBGL CLIENT (Frontend)                 |
-|    - 3D Digital Twin Globe        - 0-1000m Depth Plane Scrubber        |
-|    - 3D Satellite Constellation   - 3D Ocean Block Volumetric Slice     |
-|    - In-Situ Argo Float Markers   - Full CTD Depth Profile Chart        |
-+-------------------------------------------------------------------------+
+User
+  |
+  v
+Frontend (3D WebGL / React)
+  |
+  v
+Backend API (FastAPI)
+  |
+  +----> In-Memory Cache / Argo Database
+  |
+  v
+ML Subsurface Inversion Model
+  |
+  v
+3D Volumetric Prediction (0-1000m)
 ```
-
----
 
 ## 7. Repository Structure
 
 ```text
 SIH2026-OceanEmbed/
-├── README.md                           # Master SIH 2026 Documentation
-├── SUBMISSION_GUIDE.md                 # Hackathon submission checklist
-├── OceanEmbed_Platform_Feature_Guide.pdf # Official Technical Feature Manual
-├── requirements.txt                    # Root Python dependencies
-├── package.json                        # Root monorepo build script
-├── vercel.json                         # Cloud deployment configuration
-├── .gitignore                          # Git ignore rules
-│
-├── docs/                               # Technical Documentation
-│   └── architecture.md                 # Deep neural & WebGL architecture
-│
-├── submission/                         # SIH Presentation & Evaluation
-│   ├── PRESENTATION.md                 # Slide deck presentation outline
-│   └── DEMO.md                         # Demo instructions & test coordinates
-│
-├── assets/                             # Visual Assets
-│   └── screenshots/                    # Application UI screenshots
-│       └── README.md
-│
-├── backend/                            # FastAPI Microservice
-│   ├── main.py                         # REST API endpoints & CORS
-│   ├── model.py                        # Deep neural inference & physics engine
-│   ├── argo_data.py                    # Argo CTD database & live ingestion
-│   ├── cache.py                        # Pre-warmed depth memory cache
-│   ├── data/                           # In-situ Argo float profiles (JSON)
+├── README.md
+├── SUBMISSION_GUIDE.md
+├── submission/
+│   ├── PRESENTATION.md
+│   └── DEMO.md
+├── backend/
+│   ├── main.py
+│   ├── model.py
+│   ├── argo_data.py
+│   ├── cache.py
 │   └── requirements.txt
-│
-├── frontend/                           # React + Three.js Web Client
+├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── TopNavbar.tsx           # Institutional header & search
-│   │   │   ├── LeftSidebar.tsx         # Telemetry & profile controls
-│   │   │   ├── RightSidebar.tsx        # Layers & 0-1000m depth scrubber
-│   │   │   ├── Earth.tsx               # 3D Photorealistic globe
-│   │   │   ├── SatellitesOrbit.tsx     # 3D satellite constellation
-│   │   │   ├── ArgoMarkers.tsx         # In-situ Argo float pins
-│   │   │   ├── SubsurfaceCutaway.tsx   # Volumetric strata pillar
-│   │   │   ├── OceanBlock/             # Standalone 3D water block
-│   │   │   │   ├── OceanBlockView.tsx
-│   │   │   │   └── OceanBlock3D.tsx
-│   │   │   ├── ConstellationModal.tsx  # Satellite fleet explorer
-│   │   │   ├── TelemetryAnalyticsModal.tsx # AI validation metrics
-│   │   │   ├── MissionInfoModal.tsx    # MoES mission architecture
-│   │   │   └── FullProfileModal.tsx    # Vertical CTD chart
-│   │   ├── services/api.ts             # API client & prefetcher
-│   │   ├── utils/geo.ts                # Geospatial math & color scales
-│   │   ├── App.tsx                     # Main application orchestrator
-│   │   └── index.css                   # Institutional UI styling
-│   ├── public/textures/                # High-res NASA planetary textures
+│   │   ├── services/
+│   │   └── App.tsx
+│   ├── public/
 │   └── package.json
-│
-└── api/                                # Serverless API entrypoint
-    └── index.py
+├── docs/
+│   └── architecture.md
+├── assets/
+│   └── screenshots/
+│       └── README.md
+├── requirements.txt
+├── vercel.json
+├── .gitignore
+└── LICENSE
 ```
 
----
+### What goes where?
 
-## 8. Quickstart & Installation Guide
+| Item | Location |
+|---|---|
+| Source code | `backend/` and `frontend/` |
+| Architecture / technical documentation | `docs/` |
+| Project screenshots / hardware photos | `assets/screenshots/` |
+| Final PPT / presentation | `submission/` |
+| Demo video link | `submission/DEMO.md` |
+| Project overview | `README.md` |
 
-### Prerequisites
-- **Python 3.9+**
-- **Node.js 18+** & **npm**
+## 8. Final Presentation
 
-### Local Development Setup
+Keep your final SIH presentation in the repository whenever the file size allows it.
 
-#### 1. Start the Backend API
+See [submission/PRESENTATION.md](submission/PRESENTATION.md) for the required format.
+
+If the PPT is too large for GitHub, use Google Drive/OneDrive and put the accessible viewer link in `submission/PRESENTATION.md`.
+
+## 9. Demo Video
+
+A demo video is **optional**, but recommended.
+
+Add the YouTube/Google Drive link in [submission/DEMO.md](submission/DEMO.md).
+
+## 10. Screenshots / Prototype Photos
+
+Add important screenshots or hardware/prototype photos to:
+
+`assets/screenshots/`
+
+See [assets/screenshots/README.md](assets/screenshots/README.md) for examples and naming conventions.
+
+## 11. Installation
+
 ```bash
-cd backend
-python -m venv venv
+git clone https://github.com/anurag-maurya-ece/SIh2026.git
+cd SIh2026
 
-# Windows:
-venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
-
+# 1. Install Backend Dependencies
 pip install -r requirements.txt
-python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
-Backend API will run at: `http://127.0.0.1:8000` (Swagger docs: `http://127.0.0.1:8000/docs`).
 
-#### 2. Start the Frontend Application
-```bash
-# Open a new terminal
+# 2. Install Frontend Dependencies
 cd frontend
 npm install
+```
+
+## 12. Run
+
+```bash
+# Terminal 1 - Start Backend Server (FastAPI)
+cd backend
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
+
+# Terminal 2 - Start Frontend Client (Vite + React)
+cd frontend
 npm run dev
 ```
-Frontend Web Client will run at: `http://localhost:3000`.
 
----
+Open your browser at `http://localhost:3000`. Backend Swagger API documentation is accessible at `http://127.0.0.1:8000/docs`.
 
-## 9. REST API Reference
+## 13. Future Scope
 
-| Method | Endpoint | Query Parameters | Description |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/api/predict_grid` | `depth` (0 to 1000) | Returns 2D geospatial matrix of predicted temperatures at specified depth. |
-| `GET` | `/api/predict_profile` | `lat`, `lon` | Returns continuous 0–1000m vertical temperature and salinity CTD profile. |
-| `GET` | `/api/argo_floats` | — | Returns active Argo float observation positions and telemetry. |
-| `GET` | `/api/stats` | — | Returns global model verification KPIs ($R^2$, RMSE, MAE, inference latency). |
+1. **Direct Coupling with INCOIS ERDDAP:** Real-time ingestion of live NetCDF operational data feeds.
+2. **Automated Tropical Cyclone Heat Potential (TCHP) Alerts:** Automated early warning triggers for coastal state disaster management authorities.
+3. **High-Resolution Acoustic Ray Tracing:** Defense module for submarine sound velocity profile (SVP) modeling.
+4. **Edge Deployment on Research Vessels:** Offline containerized deployment for Sagar Kanya / Samudra Ratnakar research cruises.
 
----
+## Important
 
-## 10. Submission & Presentation Deliverables
-
-- **Pitch Deck Outline:** [submission/PRESENTATION.md](submission/PRESENTATION.md)
-- **Live Demo Guide & Coordinates:** [submission/DEMO.md](submission/DEMO.md)
-- **Technical Feature PDF:** [OceanEmbed_Platform_Feature_Guide.pdf](OceanEmbed_Platform_Feature_Guide.pdf)
-- **Architecture Documentation:** [docs/architecture.md](docs/architecture.md)
-
----
-
-## 11. License & Attribution
-
-This project is submitted under the **Smart India Hackathon 2026** for the **Ministry of Earth Sciences (MoES) / INCOIS**.  
-Licensed under the [MIT License](LICENSE).
+Before submission, make sure the repository is accessible to reviewers. Do **not** upload passwords, API keys, access tokens, `.env` files containing secrets, or other confidential credentials.
