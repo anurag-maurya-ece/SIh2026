@@ -1,58 +1,67 @@
-# SIH 2026 Presentation Pitch Deck: OceanEmbed
+# SIH 2026 Presentation: OceanEmbed (Team REGALIA)
 
-**Problem Statement ID:** 26066  
+**Problem Statement ID:** SIH26066  
 **Problem Statement Title:** Satellite Embedding-Based Deep Learning Framework for Reconstruction of Subsurface Ocean Temperature from Surface Satellite Observations  
-**Ministry:** Ministry of Earth Sciences (MoES) / INCOIS  
-**Team Name / Track:** Software / Clean & Green Ocean  
+**Theme:** Disaster Management  
+**PS Category:** Software  
+**Team Name:** REGALIA  
 
 ---
 
-## Slide 1: Title & Vision
-- **Project Name:** OceanEmbed
-- **Tagline:** AI-Powered 3D Subsurface Ocean Digital Twin
-- **Objective:** Transforming multi-mission surface satellite feeds into 0–1000m 3D subsurface thermal fields in real-time.
+## Final Presentation File
+
+The official presentation file is included in this repository:
+- **PDF Document:** [`Team_REGALIA_SIH2026_Presentation.pdf`](./Team_REGALIA_SIH2026_Presentation.pdf)
 
 ---
 
-## Slide 2: The Core Problem
-- 71% of Earth is ocean, yet subsurface thermal structures are notoriously sparse.
-- In-situ sensors (Argo Floats) cover only 1 float per $300\text{ km} \times 300\text{ km}$ box.
-- Deep ocean temperature down to 1000m drives **Cyclone Intensification**, **Monsoon Predictability**, and **Naval Acoustic Propagation**, but cannot be directly observed from satellites.
+## Slide Breakdown & Content
+
+### Slide 1: Title & Team Information
+- **Project Title:** OceanEmbed — Satellite Embedding-Based Deep Learning Framework for Reconstruction of Subsurface Ocean Temperature from Surface Satellite Observations
+- **PS ID:** SIH26066
+- **Theme:** Disaster Management
+- **Category:** Software
+- **Team Name:** REGALIA
 
 ---
 
-## Slide 3: Our Proposed Solution
-- **Physics-Informed Deep Neural Inversion**: Fusing Altimetry (SSHA), Sea Surface Temperature (SST), and Wind Stress to reconstruct 0–1000m vertical profiles.
-- **Ultra-Fast REST API Engine**: Pre-cached and on-the-fly inference yielding `<12ms` response latency.
-- **Interactive 3D WebGL Digital Twin**: Real-time depth slicing, Argo float verification, satellite tracking, and standalone 3D volumetric ocean block slicing.
+### Slide 2: The Problem & The Gap
+- **What Exists Today:** Accurate surface satellite measurements, wide surface coverage, and numerical model-based 3D data.
+- **The Critical Gap:** Continuous real-time subsurface information is still missing. Sparse in-situ ARGO sensors cannot provide continuous spatial-temporal coverage.
+- **The Solution:** A deep learning framework fusing surface satellite embeddings to reconstruct continuous 0–1000m 3D subsurface thermal fields in real-time.
 
 ---
 
-## Slide 4: Architecture & Technical Pipeline
-- Ingestion of INSAT-3DR, Sentinel-6, Oceansat-3, and SWOT observations.
-- Physics constraints: Monotonic temperature descent with depth and Mixed Layer Depth gradient preservation.
-- WebGL 3D rendering with custom GLSL shaders and dynamic Canvas raster textures.
+### Slide 3: Technical Approach & Data Pipeline
+1. **Data Sources:** Multi-satellite inputs (SST, SSS, SLA/ADT, Wind Stress, Chlorophyll).
+2. **Data Processing:** Standardizing heterogeneous datasets to a unified $0.25^\circ \times 0.25^\circ$ daily grid.
+3. **Model Architecture:** Deep learning fusion network mapping multi-modal surface observations to depth-wise thermal profiles.
+4. **Prediction Output:** Daily 3D subsurface temperature fields ($0\text{m}$ to $1000\text{m}$) at $0.25^\circ$ resolution.
+5. **Validation:** Statistical error metrics ($R^2$, RMSE, MAE) against independent quality-controlled in-situ ARGO float profiles.
 
 ---
 
-## Slide 5: Model Validation & Key Metrics
-- **Global RMSE:** $0.28^\circ\text{C}$ (against in-situ CTD profiles)
-- **$R^2$ Score:** $0.945$ across the Indian Ocean basin
-- **Mean Absolute Error (MAE):** $0.21^\circ\text{C}$
-- **Inference Latency:** $<12\text{ms}$
+### Slide 4: Feasibility, Risks & Mitigations
+1. **Satellite Data Gaps (Clouds, Noise):** Fusing multiple complementary sources with quality control, spatial alignment, and missing-data handling.
+2. **Surface Data $\neq$ Subsurface Temp:** Fusing SST + SSS + SLA/ADT + Wind + Chlorophyll + Spatio-temporal embeddings.
+3. **Different Dataset Resolutions:** Standardizing all sources to a $0.25^\circ \times 0.25^\circ$ daily grid.
+4. **Reanalysis Model Bias (GLORYS):** GLORYS provides dense training reference, while independent ARGO observations strictly validate predictions.
+5. **Sparse ARGO Observations:** Maintaining ARGO independent for unbiased statistical validation.
 
 ---
 
-## Slide 6: Live Demonstration Highlights
-- 3D Globe with interactive depth sweeping from $0\text{m}$ to $1000\text{m}$.
-- Real-time Satellite Constellation orbits with overpass telemetry.
-- 3D Ocean Block Slice view with camera angle controls and thermal spectrum mapping.
-- Recharts vertical CTD temperature and salinity distribution graphs.
+### Slide 5: Key Impacts & Benefits (6 Core Pillars)
+1. **3D Ocean Visibility:** Estimates temperature beneath the surface down to 1000m.
+2. **Cyclone Monitoring:** Reveals subsurface ocean heat content (OHC) that fuels tropical cyclone intensity.
+3. **Marine Heatwave Detection:** Identifies thermal anomalies hidden below the surface.
+4. **Fisheries & Ecosystems:** Provides depth-wise thermal information for marine habitats.
+5. **Better Ocean Forecasting:** Adds continuous 3D temperature fields into operational numerical forecast models.
+6. **High-Resolution Monitoring:** Daily temperature estimates at $0.25^\circ$ resolution across the North Indian Ocean.
 
 ---
 
-## Slide 7: Operational Impact & Future Scope
-- **Disaster Preparedness:** 48-hour advance cyclone heat potential (TCHP) warnings.
-- **Monsoon Forecasting:** Precise heat content tracking for Indian Summer Monsoon onset.
-- **Naval Defense:** Acoustic shadow zone and sound velocity profile (SVP) modeling.
-- **Future Integration:** Direct coupling with INCOIS live ERDDAP servers and automated daily NetCDF reanalysis assimilation.
+### Slide 6: Research & References
+- Satellite Altimetry & Microwave Radiometry (Sentinel-6, Jason-3, INSAT-3DR, Oceansat-3).
+- Copernicus Marine Environment Monitoring Service (CMEMS / GLORYS12V1).
+- INCOIS Indian Ocean Argo Float Program & Global Ocean Data Assimilation System (GODAS).
