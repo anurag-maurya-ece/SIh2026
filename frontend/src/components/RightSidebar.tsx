@@ -33,32 +33,32 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
   ];
 
   const getDepthInfo = (d: number) => {
-    if (d === 0) return { label: 'Surface (Epipelagic)', color: 'text-slate-950 bg-sky-100 border-sky-400' };
-    if (d <= 100) return { label: 'Mixed Layer (0-100m)', color: 'text-sky-900 bg-sky-50 border-sky-300' };
-    if (d <= 450) return { label: 'Thermocline (100-450m)', color: 'text-emerald-900 bg-emerald-50 border-emerald-300' };
-    return { label: 'Deep Ocean (450-1000m)', color: 'text-white bg-slate-950 border-slate-800' };
+    if (d === 0) return { label: 'Surface (Epipelagic)', color: 'text-sky-300 bg-sky-950/80 border-sky-500/40' };
+    if (d <= 100) return { label: 'Mixed Layer (0-100m)', color: 'text-cyan-300 bg-cyan-950/80 border-cyan-500/40' };
+    if (d <= 450) return { label: 'Thermocline (100-450m)', color: 'text-emerald-300 bg-emerald-950/80 border-emerald-500/40' };
+    return { label: 'Deep Ocean (450-1000m)', color: 'text-indigo-300 bg-indigo-950/80 border-indigo-500/40' };
   };
 
   const depthInfo = getDepthInfo(depth);
 
   return (
-    <aside className="w-64 md:w-68 flex flex-col gap-2.5 pointer-events-auto select-none z-20">
+    <aside className="w-64 md:w-68 flex flex-col gap-2.5 pointer-events-auto select-none z-20 text-white">
       {/* CARD 1: Live View & Geospatial Data Layers */}
-      <div className="institutional-card p-3 rounded-2xl flex flex-col gap-2.5">
+      <div className="space-card p-3 rounded-2xl flex flex-col gap-2.5">
         {/* Header with neat separation */}
-        <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-800">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wide">Observation Layers</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-[11px] font-bold text-white uppercase tracking-wide">Observation Layers</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-slate-500 font-medium">Auto-Orbit</span>
+            <span className="text-[10px] text-slate-400 font-mono font-medium">Auto-Orbit</span>
             {/* Toggle Switch */}
             <button
               onClick={onToggleAutoUpdate}
               className={`w-7.5 h-4 rounded-full p-0.5 transition-colors duration-200 relative ${
-                autoUpdate ? 'bg-sky-600' : 'bg-slate-200'
+                autoUpdate ? 'bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.5)]' : 'bg-slate-800'
               }`}
             >
               <div
@@ -77,14 +77,14 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
             onClick={() => onLayerChange('sst')}
             className={`flex flex-col items-center gap-1.5 p-1.5 rounded-xl transition-all duration-150 border ${
               activeLayer === 'sst'
-                ? 'bg-slate-900 text-white border-slate-800 shadow-xs'
-                : 'bg-slate-50/80 border-slate-200/80 hover:bg-white hover:border-slate-300 text-slate-700'
+                ? 'bg-sky-950/90 text-white border-sky-400/80 shadow-[0_0_12px_rgba(56,189,248,0.3)]'
+                : 'bg-slate-900/80 border-slate-800 hover:bg-slate-800/80 hover:border-slate-700 text-slate-300'
             }`}
           >
-            <div className="w-full h-8 rounded-lg overflow-hidden relative bg-gradient-to-tr from-blue-600 via-sky-400 to-amber-400 flex items-center justify-center shadow-xs">
+            <div className="w-full h-8 rounded-lg overflow-hidden relative bg-gradient-to-tr from-blue-700 via-sky-500 to-amber-400 flex items-center justify-center shadow-xs">
               <span className="text-[8.5px] font-mono font-bold text-white drop-shadow">SST</span>
             </div>
-            <span className={`text-[10px] font-semibold ${activeLayer === 'sst' ? 'text-sky-300' : 'text-slate-800'}`}>
+            <span className={`text-[10px] font-semibold ${activeLayer === 'sst' ? 'text-sky-300 font-bold' : 'text-slate-300'}`}>
               Thermal
             </span>
           </button>
@@ -94,14 +94,14 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
             onClick={() => onLayerChange('chlorophyll')}
             className={`flex flex-col items-center gap-1.5 p-1.5 rounded-xl transition-all duration-150 border ${
               activeLayer === 'chlorophyll'
-                ? 'bg-slate-900 text-white border-slate-800 shadow-xs'
-                : 'bg-slate-50/80 border-slate-200/80 hover:bg-white hover:border-slate-300 text-slate-700'
+                ? 'bg-emerald-950/90 text-white border-emerald-400/80 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+                : 'bg-slate-900/80 border-slate-800 hover:bg-slate-800/80 hover:border-slate-700 text-slate-300'
             }`}
           >
             <div className="w-full h-8 rounded-lg overflow-hidden relative bg-gradient-to-tr from-emerald-800 via-emerald-500 to-teal-300 flex items-center justify-center shadow-xs">
               <span className="text-[8.5px] font-mono font-bold text-white drop-shadow">Chl-a</span>
             </div>
-            <span className={`text-[10px] font-semibold ${activeLayer === 'chlorophyll' ? 'text-emerald-300' : 'text-slate-800'}`}>
+            <span className={`text-[10px] font-semibold ${activeLayer === 'chlorophyll' ? 'text-emerald-300 font-bold' : 'text-slate-300'}`}>
               Biology
             </span>
           </button>
@@ -111,14 +111,14 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
             onClick={() => onLayerChange('currents')}
             className={`flex flex-col items-center gap-1.5 p-1.5 rounded-xl transition-all duration-150 border ${
               activeLayer === 'currents'
-                ? 'bg-slate-900 text-white border-slate-800 shadow-xs'
-                : 'bg-slate-50/80 border-slate-200/80 hover:bg-white hover:border-slate-300 text-slate-700'
+                ? 'bg-blue-950/90 text-white border-blue-400/80 shadow-[0_0_12px_rgba(59,130,246,0.3)]'
+                : 'bg-slate-900/80 border-slate-800 hover:bg-slate-800/80 hover:border-slate-700 text-slate-300'
             }`}
           >
             <div className="w-full h-8 rounded-lg overflow-hidden relative bg-gradient-to-tr from-indigo-900 via-blue-700 to-sky-500 flex items-center justify-center shadow-xs">
               <span className="text-[8.5px] font-mono font-bold text-white drop-shadow">Flow</span>
             </div>
-            <span className={`text-[10px] font-semibold ${activeLayer === 'currents' ? 'text-sky-300' : 'text-slate-800'}`}>
+            <span className={`text-[10px] font-semibold ${activeLayer === 'currents' ? 'text-sky-300 font-bold' : 'text-slate-300'}`}>
               Currents
             </span>
           </button>
@@ -128,14 +128,14 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
             onClick={() => onLayerChange('bathymetry')}
             className={`flex flex-col items-center gap-1.5 p-1.5 rounded-xl transition-all duration-150 border ${
               activeLayer === 'bathymetry'
-                ? 'bg-slate-900 text-white border-slate-800 shadow-xs'
-                : 'bg-slate-50/80 border-slate-200/80 hover:bg-white hover:border-slate-300 text-slate-700'
+                ? 'bg-slate-900 text-white border-sky-400/80 shadow-[0_0_12px_rgba(56,189,248,0.2)]'
+                : 'bg-slate-900/80 border-slate-800 hover:bg-slate-800/80 hover:border-slate-700 text-slate-300'
             }`}
           >
             <div className="w-full h-8 rounded-lg overflow-hidden relative bg-gradient-to-tr from-slate-800 via-slate-600 to-slate-400 flex items-center justify-center shadow-xs">
               <span className="text-[8.5px] font-mono font-bold text-white drop-shadow">Bathy</span>
             </div>
-            <span className={`text-[10px] font-semibold ${activeLayer === 'bathymetry' ? 'text-slate-300' : 'text-slate-800'}`}>
+            <span className={`text-[10px] font-semibold ${activeLayer === 'bathymetry' ? 'text-slate-200 font-bold' : 'text-slate-300'}`}>
               Seabed
             </span>
           </button>
@@ -143,15 +143,15 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
       </div>
 
       {/* CARD 2: Depth Explorer (0m - 1000m) */}
-      <div className="institutional-card p-3 rounded-2xl flex flex-col gap-2.5">
+      <div className="space-card p-3 rounded-2xl flex flex-col gap-2.5">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-6.5 h-6.5 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600">
+            <div className="w-6.5 h-6.5 rounded-lg bg-sky-950/80 border border-sky-500/40 flex items-center justify-center text-sky-400">
               <Sliders className="w-3.5 h-3.5 stroke-[2.2]" />
             </div>
             <div>
-              <span className="text-xs font-bold text-slate-900 block leading-none">Depth Explorer</span>
+              <span className="text-xs font-bold text-white block leading-none">Depth Explorer</span>
               <span className={`text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded-md mt-1 inline-block border ${depthInfo.color}`}>
                 {depthInfo.label}
               </span>
@@ -159,7 +159,7 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
           </div>
 
           {/* Depth Counter Pill */}
-          <div className="flex items-baseline gap-0.5 px-2.5 py-1 rounded-lg bg-slate-900 text-white shadow-xs">
+          <div className="flex items-baseline gap-0.5 px-2.5 py-1 rounded-lg bg-sky-950/80 border border-sky-500/40 text-white shadow-[0_0_10px_rgba(56,189,248,0.2)]">
             <span className="text-xs font-mono font-bold text-white">{depth}</span>
             <span className="text-[10px] font-mono text-sky-400 font-semibold">m</span>
           </div>
@@ -174,7 +174,7 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
             step={50}
             value={depth}
             onChange={(e) => onDepthChange(Number(e.target.value))}
-            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-600 focus:outline-none"
+            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 focus:outline-none"
           />
         </div>
 
@@ -186,8 +186,8 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
               onClick={() => onDepthChange(t.d)}
               className={`py-1 rounded-lg text-[9.5px] font-mono transition-all duration-150 border ${
                 depth === t.d
-                  ? 'bg-slate-900 text-white border-slate-800 font-semibold shadow-xs'
-                  : 'bg-slate-50 border-slate-200/80 text-slate-700 font-medium hover:bg-slate-100'
+                  ? 'bg-sky-600 text-white border-sky-400 font-bold shadow-[0_0_10px_rgba(56,189,248,0.4)]'
+                  : 'bg-slate-900/80 border-slate-800 text-slate-400 font-medium hover:bg-slate-800 hover:text-slate-200'
               }`}
             >
               {t.label}
@@ -197,21 +197,21 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
       </div>
 
       {/* CARD 3: Thermal Scale Legend (SST) */}
-      <div className="institutional-card p-2.5 rounded-xl flex flex-col gap-1.5">
+      <div className="space-card p-2.5 rounded-xl flex flex-col gap-1.5">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <Thermometer className="w-3.5 h-3.5 text-slate-700 stroke-[2.2]" />
-            <span className="text-[10.5px] font-bold text-slate-900 uppercase tracking-wider">Thermal Spectrum</span>
+            <Thermometer className="w-3.5 h-3.5 text-sky-400 stroke-[2.2]" />
+            <span className="text-[10.5px] font-bold text-white uppercase tracking-wider">Thermal Spectrum</span>
           </div>
-          <span className="text-[9.5px] font-mono font-semibold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">°C</span>
+          <span className="text-[9.5px] font-mono font-semibold text-sky-300 bg-sky-950/80 px-1.5 py-0.5 rounded border border-sky-500/30">°C</span>
         </div>
 
         {/* Continuous Horizontal Gradient Bar */}
-        <div className="h-2 w-full rounded-md border border-slate-200/60 overflow-hidden bg-gradient-to-r from-[#0a2558] via-[#00a8cc] via-[#2ec4b6] via-[#38bdf8] via-[#fb8500] to-[#d62828]" />
+        <div className="h-2 w-full rounded-md border border-slate-700/80 overflow-hidden bg-gradient-to-r from-[#0a2558] via-[#00a8cc] via-[#2ec4b6] via-[#38bdf8] via-[#fb8500] to-[#d62828]" />
 
         {/* Tick Labels: -2°C to >32°C */}
-        <div className="flex justify-between text-[9px] font-mono font-medium text-slate-500">
+        <div className="flex justify-between text-[9px] font-mono font-medium text-slate-400">
           <span>-2°</span>
           <span>8°</span>
           <span>18°</span>
@@ -222,3 +222,4 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
     </aside>
   );
 };
+

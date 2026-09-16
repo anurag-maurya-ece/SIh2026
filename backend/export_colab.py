@@ -2,7 +2,7 @@
 OceanEmbed Colab Export Script (SIH 2026 PS 26066)
 Run this block at the end of your Google Colab Notebook to export your trained
 deep learning model predictions directly into the OceanEmbed web app data format.
-Notebook: https://colab.research.google.com/drive/1p0HmYI5-CpbVG0shVe4q9Q4sEBSOzULD?usp=sharing
+Notebook: https://colab.research.google.com/drive/14Qme6WX2bBrANa9OyvW5V_jbx_5pJWN2?usp=sharing
 """
 
 import json
@@ -10,13 +10,14 @@ import json
 def export_colab_predictions(trained_model, get_argo_fn=None):
     """
     Exports:
-    1. ocean_grid_predictions.json (0m to 1000m depth slices)
+    1. ocean_grid_predictions.json (0m to 1000m depth slices across 15 standard GLORYS12v1 levels)
     2. ocean_profiles.json (Vertical depth profiles for interactive tooltips)
     3. argo_floats.json (Ground-truth observation stations)
+    4. stats.json (Model accuracy metrics)
     """
     print("Exporting OceanEmbed Subsurface Predictions from Colab...")
     
-    depths = [0, 50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000]
+    depths = [0, 10, 25, 50, 75, 100, 150, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
     export_grid = {}
 
     for d in depths:

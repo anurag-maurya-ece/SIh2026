@@ -131,24 +131,24 @@ export const ConstellationModal: React.FC<ConstellationModalProps> = ({ onClose 
   const [selectedSat, setSelectedSat] = useState<SatelliteData>(SATELLITES[0]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-150 pointer-events-auto">
-      <div className="relative w-full max-w-5xl bg-white border border-slate-200/90 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-150 pointer-events-auto">
+      <div className="relative w-full max-w-5xl space-card rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-white">
         {/* Modal Header */}
-        <div className="px-5 py-3.5 md:py-4 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-white">
+        <div className="px-5 py-3.5 md:py-4 bg-slate-950/90 border-b border-sky-500/20 flex items-center justify-between text-white">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 border border-sky-500/30 flex items-center justify-center shadow-xs">
-              <Satellite className="w-4.5 h-4.5 stroke-[2.2]" />
+            <div className="w-9 h-9 rounded-xl bg-sky-500/20 text-cyan-300 border border-sky-400/30 flex items-center justify-center shadow-xs">
+              <Satellite className="w-4.5 h-4.5 stroke-[2.2] animate-pulse" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base md:text-lg font-display font-bold text-white tracking-tight">
                   Satellite Constellation Telemetry
                 </h2>
-                <span className="px-2 py-0.5 rounded-md text-[9.5px] font-mono font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                <span className="px-2 py-0.5 rounded-md text-[9.5px] font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                   6 SATELLITES ONLINE
                 </span>
               </div>
-              <p className="text-[11px] text-slate-300 font-medium">
+              <p className="text-[11px] text-sky-200/80 font-medium">
                 Earth Observation constellation feeding surface boundary data to MoES PS 26066
               </p>
             </div>
@@ -156,19 +156,19 @@ export const ConstellationModal: React.FC<ConstellationModalProps> = ({ onClose 
 
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-sky-500/20 flex items-center justify-center transition-colors"
           >
             <X className="w-4 h-4 stroke-[2.2]" />
           </button>
         </div>
 
         {/* Modal Body: Left List + Right Detail View */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-y-auto divide-y md:divide-y-0 md:divide-x divide-slate-200">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-y-auto divide-y md:divide-y-0 md:divide-x divide-sky-500/20">
           {/* Left Column: Satellite Grid/List */}
-          <div className="md:col-span-5 p-3.5 bg-slate-50/80 flex flex-col gap-2 overflow-y-auto max-h-[60vh] md:max-h-[65vh]">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-0.5 flex items-center justify-between">
+          <div className="md:col-span-5 p-3.5 bg-slate-950/40 flex flex-col gap-2 overflow-y-auto max-h-[60vh] md:max-h-[65vh]">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-sky-400 mb-0.5 flex items-center justify-between">
               <span>Active Constellation Feeds</span>
-              <span className="font-mono text-slate-700 font-semibold">INCOIS Downlink</span>
+              <span className="font-mono text-cyan-300 font-semibold">INCOIS Downlink</span>
             </div>
 
             {SATELLITES.map((sat) => {
@@ -179,27 +179,27 @@ export const ConstellationModal: React.FC<ConstellationModalProps> = ({ onClose 
                   onClick={() => setSelectedSat(sat)}
                   className={`p-3 rounded-xl border transition-all cursor-pointer select-none ${
                     isSelected
-                      ? 'bg-white border-sky-500 shadow-sm ring-1 ring-sky-500/20'
-                      : 'bg-white/80 hover:bg-white border-slate-200 hover:border-slate-300 shadow-xs'
+                      ? 'bg-slate-900 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.25)] ring-1 ring-cyan-400/50'
+                      : 'bg-slate-900/60 hover:bg-slate-900/90 border-sky-500/20 hover:border-sky-500/40 shadow-xs'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-sky-500" />
-                      <h3 className="text-xs font-bold text-slate-900">
+                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+                      <h3 className="text-xs font-bold text-white">
                         {sat.name}
                       </h3>
                     </div>
-                    <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                    <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30">
                       {sat.agency.split('/')[0]}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
-                    <span className="text-[10px] font-medium text-slate-500">
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-sky-500/15">
+                    <span className="text-[10px] font-medium text-slate-400">
                       {sat.type}
                     </span>
-                    <span className="text-[9.5px] font-mono font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                    <span className="text-[9.5px] font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/30">
                       ● {sat.health}% Health
                     </span>
                   </div>
@@ -209,51 +209,51 @@ export const ConstellationModal: React.FC<ConstellationModalProps> = ({ onClose 
           </div>
 
           {/* Right Column: Selected Satellite Telemetry & Specs */}
-          <div className="md:col-span-7 p-4 md:p-5 bg-white flex flex-col gap-3 overflow-y-auto max-h-[60vh] md:max-h-[65vh]">
+          <div className="md:col-span-7 p-4 md:p-5 bg-slate-950/20 flex flex-col gap-3 overflow-y-auto max-h-[60vh] md:max-h-[65vh]">
             {/* Header Badge Card */}
-            <div className="p-3.5 rounded-xl bg-sky-50/60 border border-sky-100 flex items-start justify-between">
+            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-sky-500/30 flex items-start justify-between shadow-xs">
               <div>
-                <span className="inline-block px-2 py-0.5 rounded-md text-[9.5px] font-mono font-semibold bg-slate-900 text-white mb-1.5">
+                <span className="inline-block px-2 py-0.5 rounded-md text-[9.5px] font-mono font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30 mb-1.5">
                   {selectedSat.agency}
                 </span>
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-white">
                   {selectedSat.name}
                 </h3>
-                <p className="text-xs font-medium text-slate-600 mt-0.5">
+                <p className="text-xs font-medium text-sky-200/80 mt-0.5">
                   {selectedSat.description}
                 </p>
               </div>
-              <div className="p-2 bg-white rounded-lg border border-slate-200 shadow-xs shrink-0 text-center">
-                <Radio className="w-4 h-4 text-sky-600 mx-auto stroke-[2.2]" />
-                <span className="text-[8.5px] font-bold font-mono block mt-1 text-slate-700">LIVE LINK</span>
+              <div className="p-2 bg-slate-950/80 rounded-lg border border-sky-500/30 shadow-xs shrink-0 text-center">
+                <Radio className="w-4 h-4 text-cyan-400 mx-auto stroke-[2.2] animate-pulse" />
+                <span className="text-[8.5px] font-bold font-mono block mt-1 text-cyan-300">LIVE LINK</span>
               </div>
             </div>
 
             {/* Spec Matrix */}
             <div className="grid grid-cols-2 gap-2.5">
-              <div className="p-2.5 bg-slate-50/80 rounded-lg border border-slate-200/80">
-                <span className="text-[9px] font-medium text-slate-500 block">Orbit Altitude</span>
-                <span className="text-xs font-mono font-bold text-slate-900 mt-0.5 block">{selectedSat.altitude}</span>
+              <div className="p-2.5 bg-slate-900/80 rounded-lg border border-sky-500/20">
+                <span className="text-[9px] font-medium text-slate-400 block">Orbit Altitude</span>
+                <span className="text-xs font-mono font-bold text-white mt-0.5 block">{selectedSat.altitude}</span>
               </div>
-              <div className="p-2.5 bg-slate-50/80 rounded-lg border border-slate-200/80">
-                <span className="text-[9px] font-medium text-slate-500 block">Inclination / Orbit</span>
-                <span className="text-xs font-mono font-bold text-slate-900 mt-0.5 block">{selectedSat.inclination}</span>
+              <div className="p-2.5 bg-slate-900/80 rounded-lg border border-sky-500/20">
+                <span className="text-[9px] font-medium text-slate-400 block">Inclination / Orbit</span>
+                <span className="text-xs font-mono font-bold text-white mt-0.5 block">{selectedSat.inclination}</span>
               </div>
-              <div className="p-2.5 bg-slate-50/80 rounded-lg border border-slate-200/80">
-                <span className="text-[9px] font-medium text-slate-500 block">Revisit Frequency</span>
-                <span className="text-xs font-mono font-bold text-slate-900 mt-0.5 block">{selectedSat.revisit}</span>
+              <div className="p-2.5 bg-slate-900/80 rounded-lg border border-sky-500/20">
+                <span className="text-[9px] font-medium text-slate-400 block">Revisit Frequency</span>
+                <span className="text-xs font-mono font-bold text-white mt-0.5 block">{selectedSat.revisit}</span>
               </div>
-              <div className="p-2.5 bg-emerald-50/60 rounded-lg border border-emerald-200/70">
-                <span className="text-[9px] font-medium text-emerald-800 block">Telemetry Downlink</span>
-                <span className="text-[11px] font-mono font-bold text-emerald-900 mt-0.5 block">{selectedSat.lastPass}</span>
+              <div className="p-2.5 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
+                <span className="text-[9px] font-medium text-emerald-400 block">Telemetry Downlink</span>
+                <span className="text-[11px] font-mono font-bold text-emerald-300 mt-0.5 block">{selectedSat.lastPass}</span>
               </div>
             </div>
 
             {/* Instruments & Sensor Payload */}
-            <div className="p-3 bg-white rounded-xl border border-slate-200/90 shadow-xs">
+            <div className="p-3 bg-slate-900/80 rounded-xl border border-sky-500/20 shadow-xs">
               <div className="flex items-center gap-1.5 mb-2">
-                <Cpu className="w-3.5 h-3.5 text-slate-700 stroke-[2.2]" />
-                <h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-wider">
+                <Cpu className="w-3.5 h-3.5 text-cyan-400 stroke-[2.2]" />
+                <h4 className="text-[11px] font-bold text-sky-400 uppercase tracking-wider">
                   Active Sensor Payloads
                 </h4>
               </div>
@@ -261,7 +261,7 @@ export const ConstellationModal: React.FC<ConstellationModalProps> = ({ onClose 
                 {selectedSat.payload.map((pl, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 rounded-md text-[10.5px] font-mono font-medium bg-slate-50 border border-slate-200 text-slate-800 shadow-xs"
+                    className="px-2.5 py-1 rounded-md text-[10.5px] font-mono font-medium bg-slate-950/80 border border-sky-500/30 text-sky-200 shadow-xs"
                   >
                     ⚡ {pl}
                   </span>
@@ -270,9 +270,9 @@ export const ConstellationModal: React.FC<ConstellationModalProps> = ({ onClose 
             </div>
 
             {/* Neural Network Integration Flow */}
-            <div className="p-3.5 bg-slate-900 text-white rounded-xl border border-slate-800 shadow-sm">
+            <div className="p-3.5 bg-slate-950/90 text-white rounded-xl border border-sky-500/30 shadow-sm">
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[10px] font-mono font-bold text-sky-400 uppercase tracking-wider">
+                <span className="text-[10px] font-mono font-bold text-cyan-400 uppercase tracking-wider">
                   AI Pipeline Integration
                 </span>
                 <span className="text-[9.5px] font-mono text-emerald-400 font-semibold">
@@ -287,13 +287,13 @@ export const ConstellationModal: React.FC<ConstellationModalProps> = ({ onClose 
         </div>
 
         {/* Modal Footer */}
-        <div className="px-5 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-          <span className="text-[11px] font-medium text-slate-500 hidden sm:inline">
+        <div className="px-5 py-3 bg-slate-950/80 border-t border-sky-500/20 flex items-center justify-between">
+          <span className="text-[11px] font-medium text-slate-400 hidden sm:inline">
             Source: INCOIS Live Data Gateway • ISRO MOSDAC • Copernicus Marine Service
           </span>
           <button
             onClick={onClose}
-            className="w-full sm:w-auto px-4 py-2 rounded-lg text-xs font-semibold bg-sky-600 hover:bg-sky-700 text-white shadow-xs transition-all active:scale-[0.99]"
+            className="cosmic-btn-primary w-full sm:w-auto px-4 py-2 rounded-lg text-xs font-semibold shadow-xs transition-all active:scale-[0.99]"
           >
             Return to 3D Globe
           </button>

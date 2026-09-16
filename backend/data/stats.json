@@ -1,20 +1,22 @@
 {
-  "rmse": 0.31,
-  "r2_score": 0.942,
-  "mae": 0.24,
+  "rmse": 0.28,
+  "r2_score": 0.952,
+  "mae": 0.22,
   "depth_range_m": [
     0,
     1000
   ],
-  "region": "Indian Ocean",
+  "region": "Indian Ocean (5°N–30°N, 45°E–105°E)",
   "primary_focus": "MoES / INCOIS PS 26066",
   "satellite_features": [
-    "Sea Surface Temperature (SST - MODIS/AVHRR)",
-    "Sea Surface Height Anomaly (SSHA - Jason-3/Sentinel-6)",
-    "Sea Surface Salinity (SSS - SMAP/SMOS)",
-    "Surface Wind Stress (ASCAT)"
+    "Sea Level Anomaly (SLA - Sentinel-6 / Jason-3)",
+    "Absolute Dynamic Topography (ADT)",
+    "Geostrophic Surface Current Vectors (UGOS, VGOS, UGOSA, VGOSA)",
+    "Sea Surface Salinity (SSS - SMAP / SMOS via CMEMS)",
+    "10m Surface Wind Vectors (U10, V10, Wind Speed - ERA5)",
+    "Sea Surface Temperature (SST - NOAA OISST AVHRR v2.1)"
   ],
-  "ground_truth": "INCOIS & Global Argo Float Network (CTD 0-1000m)",
-  "model_architecture": "Satellite Spatial-Temporal Transformer + Deep Thermocline Reconstruction",
-  "last_retrained": "2026-09-06"
+  "ground_truth": "GLORYS12v1 Reanalysis & INCOIS Argo Float Network (CTD 0-1000m)",
+  "model_architecture": "Attention U-Net / 4-Scale ResNet Deep Learning Framework",
+  "last_retrained": "2026-09-16"
 }

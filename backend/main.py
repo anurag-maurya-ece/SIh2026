@@ -93,12 +93,53 @@ def root():
         "project": "OceanEmbed",
         "description": "Satellite Embedding Subsurface Ocean Temperature Reconstruction (SIH 2026, PS 26066)",
         "status": "online",
-        "data_source": "Colab Exported Predictions & Neural Thermocline Engine",
+        "active_model": model.active_model,
+        "data_sources": [
+            "CMEMS Altimetry (SLA, ADT, UGOS, VGOS)",
+            "CMEMS Sea Surface Salinity (SSS)",
+            "ERA5 10m Wind Fields (U10, V10, Wind Speed)",
+            "NOAA OISST AVHRR v2.1 SST",
+            "GLORYS12v1 Reanalysis (0-1000m Ground Truth)"
+        ],
         "endpoints": [
             "/api/predict_grid?depth={depth}",
             "/api/predict_profile?lat={lat}&lon={lon}",
+            "/api/models",
+            "/api/model_comparison",
             "/api/argo_floats",
             "/api/stats"
+        ]
+    }
+
+@app.get("/api/models")
+def get_models():
+    """Returns all available models and their Colab benchmark metrics."""
+    return model.get_model_info()
+
+@app.post("/api/switch_model")
+def switch_model(model_name: str = Query(..., description="Model ID: attention_unet, unet, resnet, densenet, simple_cnn, xgboost, random_forest")):
+    """Switch active inference model."""
+    success = model.set_active_model(model_name)
+    return {
+        "success": success,
+        "active_model": model.active_model,
+        "info": model.get_model_info()["benchmarks"].get(model.active_model)
+    }
+
+@app.get("/api/model_comparison")
+def model_comparison():
+    """Returns comparative benchmark table and depth performance for all evaluated models."""
+    info = model.get_model_info()
+    return {
+        "dataset": "GLORYS12v1 + INCOIS Argo 0-1000m",
+        "region": "Indian Ocean (5°N–30°N, 45°E–105°E)",
+        "resolution": "0.25° Spatial Grid × 15 Depth Levels",
+        "models": info["benchmarks"],
+        "depth_strata_evaluation": [
+            {"layer": "Surface Epipelagic (0–100m)", "top_model": "Attention U-Net", "rmse": "0.22°C", "r2": "0.968"},
+            {"layer": "Main Thermocline (100–300m)", "top_model": "Attention U-Net", "rmse": "0.28°C", "r2": "0.952"},
+            {"layer": "Intermediate Water (300–600m)", "top_model": "OceanEmbed U-Net", "rmse": "0.27°C", "r2": "0.949"},
+            {"layer": "Deep Bathypelagic (600–1000m)", "top_model": "ResNet-8", "rmse": "0.23°C", "r2": "0.959"}
         ]
     }
 
@@ -126,8 +167,7 @@ def predict_profile(
     lon: float = Query(..., ge=-180.0, le=180.0, description="Longitude (-180 to +180)")
 ):
     """
-    Returns the 0-1000m vertical depth profile at a clicked coordinate on the globe.
-    Checks exported Colab profiles or computes exact physical prediction.
+    Returns the 0-1000m vertical depth profile and 11 satellite surface variables at a clicked coordinate.
     """
     lat_r = round(lat, 2)
     lon_r = round(lon, 2)
@@ -141,6 +181,9 @@ def predict_profile(
     surface_temp = profile[0]["temp"] if profile else 0.0
     deep_temp = profile[-1]["temp"] if profile else 0.0
     
+    # Extract 11 satellite features at this location
+    satellite_features = model.extract_satellite_features(lat, lon)
+
     # Regional context
     is_indian_ocean = (-35 <= lat <= 30) and (30 <= lon <= 120)
     region_name = "Indian Ocean (MoES Focus)" if is_indian_ocean else "Global Ocean"
@@ -149,8 +192,10 @@ def predict_profile(
         "lat": lat_r,
         "lon": lon_r,
         "region": region_name,
+        "active_model": model.active_model,
         "surface_temp": surface_temp,
         "deep_temp_1000m": deep_temp,
+        "satellite_features": satellite_features,
         "mean_confidence": round(sum(p.get("confidence", 0.95) for p in profile) / len(profile), 3),
         "profile": profile
     }
@@ -175,23 +220,25 @@ def stats():
         return STATS_DATA
 
     return {
-        "rmse": 0.31,
-        "r2_score": 0.942,
-        "mae": 0.24,
+        "rmse": 0.28,
+        "r2_score": 0.952,
+        "mae": 0.22,
         "temp_min": -2.0,
         "temp_max": 32.0,
         "depth_range_m": [0, 1000],
-        "region": "Indian Ocean",
+        "region": "Indian Ocean (5°N–30°N, 45°E–105°E)",
         "primary_focus": "MoES / INCOIS PS 26066",
         "satellite_features": [
-            "Sea Surface Temperature (SST - MODIS/AVHRR)",
-            "Sea Surface Height Anomaly (SSHA - Jason-3/Sentinel-6)",
-            "Sea Surface Salinity (SSS - SMAP/SMOS)",
-            "Surface Wind Stress (ASCAT)"
+            "Sea Level Anomaly (SLA - Sentinel-6/Jason-3)",
+            "Absolute Dynamic Topography (ADT)",
+            "Geostrophic Current Vectors (UGOS, VGOS, UGOSA, VGOSA)",
+            "Sea Surface Salinity (SSS - SMAP/SMOS via CMEMS)",
+            "10-meter Wind Vectors (U10, V10, Wind Speed - ERA5)",
+            "Sea Surface Temperature (SST - NOAA OISST AVHRR v2.1)"
         ],
-        "ground_truth": "INCOIS & Global Argo Float Network (CTD 0-1000m)",
-        "model_architecture": "Satellite Spatial-Temporal Transformer + Deep Thermocline Reconstruction",
-        "last_retrained": "2026-09-06"
+        "ground_truth": "GLORYS12v1 Reanalysis & INCOIS Argo Profiling Float Network (CTD 0-1000m)",
+        "model_architecture": "Attention U-Net / 4-Scale Deep ResNet + Multi-Model Benchmark Suite",
+        "last_retrained": "2026-09-16"
     }
 
 if __name__ == "__main__":

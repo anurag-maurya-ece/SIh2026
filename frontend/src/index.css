@@ -32,77 +32,76 @@
   }
 }
 
-/* Modern Institutional Ocean Intelligence UI System */
-.glass-hud {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-  color: #0f172a;
+/* Modern Space-Grade Earth Observation & Ocean Intelligence UI System */
+.space-hud, .glass-hud {
+  background: rgba(8, 14, 28, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.6), 0 0 20px -5px rgba(56, 189, 248, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
 }
 
-.institutional-card {
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.08), 0 1px 3px 0 rgba(15, 23, 42, 0.04);
-  color: #0f172a;
+.space-card, .institutional-card {
+  background: rgba(10, 18, 36, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.7), 0 0 15px -3px rgba(2, 132, 199, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
 }
 
-.ocean-btn-primary {
-  background: #0284c7;
+.cosmic-btn-primary, .ocean-btn-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   color: #ffffff;
-  border: 1px solid #0369a1;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 15px -2px rgba(2, 132, 199, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
   font-weight: 600;
-  transition: all 0.15s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.ocean-btn-primary:hover {
-  background: #0369a1;
-  box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.35);
-  transform: translateY(-0.5px);
+.cosmic-btn-primary:hover, .ocean-btn-primary:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  box-shadow: 0 0 25px 0 rgba(56, 189, 248, 0.55);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
 }
-.ocean-btn-primary:active {
+.cosmic-btn-primary:active, .ocean-btn-primary:active {
   transform: translateY(0.5px);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.ocean-btn-dark {
-  background: #0f172a;
-  color: #ffffff;
-  border: 1px solid #1e293b;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+.cosmic-btn-dark, .ocean-btn-dark {
+  background: rgba(15, 23, 42, 0.85);
+  color: #f8fafc;
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
   font-weight: 600;
-  transition: all 0.15s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
-.ocean-btn-dark:hover {
-  background: #1e293b;
-  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.25);
+.cosmic-btn-dark:hover, .ocean-btn-dark:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 15px -2px rgba(56, 189, 248, 0.3);
   transform: translateY(-0.5px);
-}
-.ocean-btn-dark:active {
-  transform: translateY(0.5px);
 }
 
 .data-badge-sky {
-  background: #f0f9ff;
-  color: #0369a1;
-  border: 1px solid #bae6fd;
+  background: rgba(2, 132, 199, 0.18);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
   font-weight: 600;
 }
 
 .data-badge-emerald {
-  background: #ecfdf5;
-  color: #047857;
-  border: 1px solid #a7f3d0;
+  background: rgba(5, 150, 105, 0.18);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.35);
   font-weight: 600;
 }
 
 .data-badge-slate {
-  background: #f8fafc;
-  color: #475569;
-  border: 1px solid #e2e8f0;
+  background: rgba(30, 41, 59, 0.6);
+  color: #94a3b8;
+  border: 1px solid rgba(71, 85, 105, 0.5);
   font-weight: 600;
 }
 
